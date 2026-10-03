@@ -1,0 +1,9 @@
+{
+  "name": "ResNet50_Transfer",
+  "version": "1.0.0",
+  "inputSize": 224,
+  "classCount": 38,
+  "dataset": "New Plant Diseases Dataset (Augmented), derivado de PlantVillage",
+  "metrics": null,
+  "evaluationNote": "Métricas pendientes de verificación con una evaluación reproducible"
+}

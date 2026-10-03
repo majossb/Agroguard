@@ -1,0 +1,1004 @@
+[
+  {
+    "classKey": "Apple___Apple_scab",
+    "cropKey": "Apple",
+    "conditionKey": "Apple_scab",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Manzana",
+        "conditionName": "Sarna del manzano (Venturia inaequalis)"
+      }
+    },
+    "description": "Condición fitopatológica de Manzana: Sarna del manzano (Venturia inaequalis).",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Apple___Black_rot",
+    "cropKey": "Apple",
+    "conditionKey": "Black_rot",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Manzana",
+        "conditionName": "Podredumbre negra"
+      }
+    },
+    "description": "Condición fitopatológica de Manzana: Podredumbre negra.",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Apple___Cedar_apple_rust",
+    "cropKey": "Apple",
+    "conditionKey": "Cedar_apple_rust",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Manzana",
+        "conditionName": "Roya del cedro y manzano"
+      }
+    },
+    "description": "Condición fitopatológica de Manzana: Roya del cedro y manzano.",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Apple___healthy",
+    "cropKey": "Apple",
+    "conditionKey": "healthy",
+    "isHealthy": true,
+    "names": {
+      "es": {
+        "cropName": "Manzana",
+        "conditionName": "Hoja sana"
+      }
+    },
+    "description": "Hoja de Manzana en estado saludable, sin signos visibles de patógenos.",
+    "symptoms": [],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Blueberry___healthy",
+    "cropKey": "Blueberry",
+    "conditionKey": "healthy",
+    "isHealthy": true,
+    "names": {
+      "es": {
+        "cropName": "Arándano",
+        "conditionName": "Hoja sana"
+      }
+    },
+    "description": "Hoja de Arándano en estado saludable, sin signos visibles de patógenos.",
+    "symptoms": [],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Cherry_(including_sour)___Powdery_mildew",
+    "cropKey": "Cherry_(including_sour)",
+    "conditionKey": "Powdery_mildew",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Cereza",
+        "conditionName": "Oídio / Cenicilla"
+      }
+    },
+    "description": "Condición fitopatológica de Cereza: Oídio / Cenicilla.",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Cherry_(including_sour)___healthy",
+    "cropKey": "Cherry_(including_sour)",
+    "conditionKey": "healthy",
+    "isHealthy": true,
+    "names": {
+      "es": {
+        "cropName": "Cereza",
+        "conditionName": "Hoja sana"
+      }
+    },
+    "description": "Hoja de Cereza en estado saludable, sin signos visibles de patógenos.",
+    "symptoms": [],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+    "cropKey": "Corn_(maize)",
+    "conditionKey": "Cercospora_leaf_spot Gray_leaf_spot",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Maíz",
+        "conditionName": "Mancha foliar por Cercospora / Mancha gris"
+      }
+    },
+    "description": "Condición fitopatológica de Maíz: Mancha foliar por Cercospora / Mancha gris.",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Corn_(maize)___Common_rust_",
+    "cropKey": "Corn_(maize)",
+    "conditionKey": "Common_rust_",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Maíz",
+        "conditionName": "Roya común"
+      }
+    },
+    "description": "Condición fitopatológica de Maíz: Roya común.",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Corn_(maize)___Northern_Leaf_Blight",
+    "cropKey": "Corn_(maize)",
+    "conditionKey": "Northern_Leaf_Blight",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Maíz",
+        "conditionName": "Tizón foliar del norte"
+      }
+    },
+    "description": "Condición fitopatológica de Maíz: Tizón foliar del norte.",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Corn_(maize)___healthy",
+    "cropKey": "Corn_(maize)",
+    "conditionKey": "healthy",
+    "isHealthy": true,
+    "names": {
+      "es": {
+        "cropName": "Maíz",
+        "conditionName": "Hoja sana"
+      }
+    },
+    "description": "Hoja de Maíz en estado saludable, sin signos visibles de patógenos.",
+    "symptoms": [],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Grape___Black_rot",
+    "cropKey": "Grape",
+    "conditionKey": "Black_rot",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Vid / Uva",
+        "conditionName": "Podredumbre negra"
+      }
+    },
+    "description": "Condición fitopatológica de Vid / Uva: Podredumbre negra.",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Grape___Esca_(Black_Measles)",
+    "cropKey": "Grape",
+    "conditionKey": "Esca_(Black_Measles)",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Vid / Uva",
+        "conditionName": "Esca / Sarampión negro"
+      }
+    },
+    "description": "Condición fitopatológica de Vid / Uva: Esca / Sarampión negro.",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+    "cropKey": "Grape",
+    "conditionKey": "Leaf_blight_(Isariopsis_Leaf_Spot)",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Vid / Uva",
+        "conditionName": "Tizón de la hoja (Mancha por Isariopsis)"
+      }
+    },
+    "description": "Condición fitopatológica de Vid / Uva: Tizón de la hoja (Mancha por Isariopsis).",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Grape___healthy",
+    "cropKey": "Grape",
+    "conditionKey": "healthy",
+    "isHealthy": true,
+    "names": {
+      "es": {
+        "cropName": "Vid / Uva",
+        "conditionName": "Hoja sana"
+      }
+    },
+    "description": "Hoja de Vid / Uva en estado saludable, sin signos visibles de patógenos.",
+    "symptoms": [],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Orange___Haunglongbing_(Citrus_greening)",
+    "cropKey": "Orange",
+    "conditionKey": "Haunglongbing_(Citrus_greening)",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Naranja",
+        "conditionName": "Huanglongbing (HLB / Enverdecimiento de los cítricos)"
+      }
+    },
+    "description": "Condición fitopatológica de Naranja: Huanglongbing (HLB / Enverdecimiento de los cítricos).",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Peach___Bacterial_spot",
+    "cropKey": "Peach",
+    "conditionKey": "Bacterial_spot",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Melocotón / Durazno",
+        "conditionName": "Mancha bacteriana"
+      }
+    },
+    "description": "Condición fitopatológica de Melocotón / Durazno: Mancha bacteriana.",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Peach___healthy",
+    "cropKey": "Peach",
+    "conditionKey": "healthy",
+    "isHealthy": true,
+    "names": {
+      "es": {
+        "cropName": "Melocotón / Durazno",
+        "conditionName": "Hoja sana"
+      }
+    },
+    "description": "Hoja de Melocotón / Durazno en estado saludable, sin signos visibles de patógenos.",
+    "symptoms": [],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Pepper,_bell___Bacterial_spot",
+    "cropKey": "Pepper,_bell",
+    "conditionKey": "Bacterial_spot",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Pimiento / Pimentón",
+        "conditionName": "Mancha bacteriana"
+      }
+    },
+    "description": "Condición fitopatológica de Pimiento / Pimentón: Mancha bacteriana.",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Pepper,_bell___healthy",
+    "cropKey": "Pepper,_bell",
+    "conditionKey": "healthy",
+    "isHealthy": true,
+    "names": {
+      "es": {
+        "cropName": "Pimiento / Pimentón",
+        "conditionName": "Hoja sana"
+      }
+    },
+    "description": "Hoja de Pimiento / Pimentón en estado saludable, sin signos visibles de patógenos.",
+    "symptoms": [],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Potato___Early_blight",
+    "cropKey": "Potato",
+    "conditionKey": "Early_blight",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Papa / Patata",
+        "conditionName": "Tizón temprano (Alternaria)"
+      }
+    },
+    "description": "Condición fitopatológica de Papa / Patata: Tizón temprano (Alternaria).",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Potato___Late_blight",
+    "cropKey": "Potato",
+    "conditionKey": "Late_blight",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Papa / Patata",
+        "conditionName": "Tizón tardío (Phytophthora)"
+      }
+    },
+    "description": "Condición fitopatológica de Papa / Patata: Tizón tardío (Phytophthora).",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Potato___healthy",
+    "cropKey": "Potato",
+    "conditionKey": "healthy",
+    "isHealthy": true,
+    "names": {
+      "es": {
+        "cropName": "Papa / Patata",
+        "conditionName": "Hoja sana"
+      }
+    },
+    "description": "Hoja de Papa / Patata en estado saludable, sin signos visibles de patógenos.",
+    "symptoms": [],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Raspberry___healthy",
+    "cropKey": "Raspberry",
+    "conditionKey": "healthy",
+    "isHealthy": true,
+    "names": {
+      "es": {
+        "cropName": "Frambuesa",
+        "conditionName": "Hoja sana"
+      }
+    },
+    "description": "Hoja de Frambuesa en estado saludable, sin signos visibles de patógenos.",
+    "symptoms": [],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Soybean___healthy",
+    "cropKey": "Soybean",
+    "conditionKey": "healthy",
+    "isHealthy": true,
+    "names": {
+      "es": {
+        "cropName": "Soja / Soya",
+        "conditionName": "Hoja sana"
+      }
+    },
+    "description": "Hoja de Soja / Soya en estado saludable, sin signos visibles de patógenos.",
+    "symptoms": [],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Squash___Powdery_mildew",
+    "cropKey": "Squash",
+    "conditionKey": "Powdery_mildew",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Calabaza / Zapallo",
+        "conditionName": "Oídio / Cenicilla"
+      }
+    },
+    "description": "Condición fitopatológica de Calabaza / Zapallo: Oídio / Cenicilla.",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Strawberry___Leaf_scorch",
+    "cropKey": "Strawberry",
+    "conditionKey": "Leaf_scorch",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Fresa / Frutilla",
+        "conditionName": "Quemadura de la hoja"
+      }
+    },
+    "description": "Condición fitopatológica de Fresa / Frutilla: Quemadura de la hoja.",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Strawberry___healthy",
+    "cropKey": "Strawberry",
+    "conditionKey": "healthy",
+    "isHealthy": true,
+    "names": {
+      "es": {
+        "cropName": "Fresa / Frutilla",
+        "conditionName": "Hoja sana"
+      }
+    },
+    "description": "Hoja de Fresa / Frutilla en estado saludable, sin signos visibles de patógenos.",
+    "symptoms": [],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Tomato___Bacterial_spot",
+    "cropKey": "Tomato",
+    "conditionKey": "Bacterial_spot",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Tomate",
+        "conditionName": "Mancha bacteriana"
+      }
+    },
+    "description": "Condición fitopatológica de Tomate: Mancha bacteriana.",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Tomato___Early_blight",
+    "cropKey": "Tomato",
+    "conditionKey": "Early_blight",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Tomate",
+        "conditionName": "Tizón temprano (Alternaria)"
+      }
+    },
+    "description": "Condición fitopatológica de Tomate: Tizón temprano (Alternaria).",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Tomato___Late_blight",
+    "cropKey": "Tomato",
+    "conditionKey": "Late_blight",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Tomate",
+        "conditionName": "Tizón tardío (Phytophthora)"
+      }
+    },
+    "description": "Condición fitopatológica de Tomate: Tizón tardío (Phytophthora).",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Tomato___Leaf_Mold",
+    "cropKey": "Tomato",
+    "conditionKey": "Leaf_Mold",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Tomate",
+        "conditionName": "Moho de la hoja (Passalora fulva)"
+      }
+    },
+    "description": "Condición fitopatológica de Tomate: Moho de la hoja (Passalora fulva).",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Tomato___Septoria_leaf_spot",
+    "cropKey": "Tomato",
+    "conditionKey": "Septoria_leaf_spot",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Tomate",
+        "conditionName": "Mancha foliar por Septoria"
+      }
+    },
+    "description": "Condición fitopatológica de Tomate: Mancha foliar por Septoria.",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Tomato___Spider_mites Two-spotted_spider_mite",
+    "cropKey": "Tomato",
+    "conditionKey": "Spider_mites Two-spotted_spider_mite",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Tomate",
+        "conditionName": "Ácaros (Araña roja de dos manchas)"
+      }
+    },
+    "description": "Condición fitopatológica de Tomate: Ácaros (Araña roja de dos manchas).",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Tomato___Target_Spot",
+    "cropKey": "Tomato",
+    "conditionKey": "Target_Spot",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Tomate",
+        "conditionName": "Mancha diana (Corynespora)"
+      }
+    },
+    "description": "Condición fitopatológica de Tomate: Mancha diana (Corynespora).",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+    "cropKey": "Tomato",
+    "conditionKey": "Tomato_Yellow_Leaf_Curl_Virus",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Tomate",
+        "conditionName": "Virus del rizado amarillo del tomate (TYLCV)"
+      }
+    },
+    "description": "Condición fitopatológica de Tomate: Virus del rizado amarillo del tomate (TYLCV).",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Tomato___Tomato_mosaic_virus",
+    "cropKey": "Tomato",
+    "conditionKey": "Tomato_mosaic_virus",
+    "isHealthy": false,
+    "names": {
+      "es": {
+        "cropName": "Tomate",
+        "conditionName": "Virus del mosaico del tomate (ToMV)"
+      }
+    },
+    "description": "Condición fitopatológica de Tomate: Virus del mosaico del tomate (ToMV).",
+    "symptoms": [
+      "Síntomas pendientes de revisión agronómica"
+    ],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  },
+  {
+    "classKey": "Tomato___healthy",
+    "cropKey": "Tomato",
+    "conditionKey": "healthy",
+    "isHealthy": true,
+    "names": {
+      "es": {
+        "cropName": "Tomate",
+        "conditionName": "Hoja sana"
+      }
+    },
+    "description": "Hoja de Tomate en estado saludable, sin signos visibles de patógenos.",
+    "symptoms": [],
+    "management": {
+      "cultural": [],
+      "biological": [],
+      "chemical": []
+    },
+    "reviewStatus": "PENDING_REVIEW",
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "sources": [
+      "PlantVillage Dataset / AgroGuard Core"
+    ]
+  }
+]

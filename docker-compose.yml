@@ -1,0 +1,44 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agroguard-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      NODE_ENV: development
+      MONGO_URI: mongodb://mongo:27017/agroguard
+      JWT_ACCESS_SECRET: dev_jwt_access_secret_key_for_local_testing_123456789
+      INFERENCE_DRIVER: mock
+      ALLOW_MOCK_IN_PRODUCTION: "false"
+      STORAGE_DIR: uploads/images
+      CORS_ORIGINS: http://localhost:5173,http://localhost:3000
+    volumes:
+      - ./uploads/images:/app/uploads/images
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  mongo:
+    image: mongo:7.0
+    container_name: agroguard-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: agroguard
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+volumes:
+  mongo_data:
+    driver: local

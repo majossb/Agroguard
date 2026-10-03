@@ -1,0 +1,1058 @@
+openapi: 3.1.0
+info:
+  title: AgroGuard API
+  description: |
+    API REST para el backend de AgroGuard: Diagnóstico temprano y gestión fitopatológica en cultivos agrícolas asistido por Visión por Computadora y Deep Learning.
+    
+    Construida con Clean Architecture y arquitectura hexagonal en Node.js (Express 5, MongoDB / Mongoose, Sharp).
+  version: 1.0.0
+  contact:
+    name: Equipo AgroGuard
+    url: https://agroguard.dev
+    email: soporte@agroguard.dev
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: /api/v1
+    description: Servidor API v1
+
+paths:
+  /health:
+    get:
+      summary: Verificación de salud del sistema
+      description: Devuelve el estado de disponibilidad del backend, conexión con MongoDB y estado del motor de inferencia.
+      operationId: getHealth
+      tags:
+        - Sistema
+      responses:
+        '200':
+          description: Sistema operativo y saludable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+        '503':
+          description: Sistema con fallas o servicios críticos caídos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+  /auth/register:
+    post:
+      summary: Registro de nuevo agricultor
+      description: Crea una nueva cuenta de usuario con rol FARMER, encripta la contraseña con bcrypt (costo 12) y devuelve credenciales iniciales.
+      operationId: registerUser
+      tags:
+        - Autenticación
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: Usuario registrado exitosamente.
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: refreshToken=abc123...; HttpOnly; Path=/api/v1/auth; SameSite=Lax
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '409':
+          $ref: '#/components/responses/ConflictError'
+
+  /auth/login:
+    post:
+      summary: Inicio de sesión
+      description: Valida credenciales de acceso. Emite un Access Token JWT en el cuerpo y un Refresh Token en cookie HttpOnly.
+      operationId: loginUser
+      tags:
+        - Autenticación
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Inicio de sesión exitoso.
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /auth/refresh:
+    post:
+      summary: Rotación y renovación de sesión
+      description: Rota el Refresh Token opaco recibido en la cookie HttpOnly y emite un nuevo Access Token JWT. Detecta intentos de reutilización de tokens revocados.
+      operationId: refreshSession
+      tags:
+        - Autenticación
+      security:
+        - CookieAuth: []
+      responses:
+        '200':
+          description: Sesión renovada con rotación exitosa.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /auth/logout:
+    post:
+      summary: Cierre de sesión
+      description: Revoca el Refresh Token actual y borra la cookie HttpOnly.
+      operationId: logoutUser
+      tags:
+        - Autenticación
+      security:
+        - CookieAuth: []
+      responses:
+        '200':
+          description: Sesión cerrada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Sesión cerrada exitosamente.
+
+  /users/me:
+    get:
+      summary: Consultar perfil del usuario autenticado
+      description: Obtiene los datos del perfil del agricultor autenticado sin exponer contraseñas.
+      operationId: getCurrentUser
+      tags:
+        - Usuarios
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Perfil del usuario.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      summary: Eliminar cuenta en cascada
+      description: Elimina permanentemente la cuenta del usuario, todos sus diagnósticos, imágenes en disco, feedback y sesiones activas.
+      operationId: deleteAccount
+      tags:
+        - Usuarios
+      security:
+        - BearerAuth: []
+      responses:
+        '204':
+          description: Cuenta y datos asociados eliminados definitivamente.
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /diagnoses:
+    post:
+      summary: Realizar diagnóstico fitopatológico por imagen
+      description: |
+        Sube una fotografía de hoja para clasificación mediante el modelo de Inteligencia Artificial.
+        - Si no se envía token de autorización, procesa en modo **anónimo** (no se persiste).
+        - Si se envía token Bearer válido, **persiste** el diagnóstico y la imagen normalizada en el historial del usuario.
+      operationId: createDiagnosis
+      tags:
+        - Diagnósticos
+      security:
+        - {}
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - image
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: Archivo de imagen de la hoja (JPEG, PNG, WebP; máx. 8 MB).
+                plotName:
+                  type: string
+                  maxLength: 100
+                  example: Lote Norte
+                cropHint:
+                  type: string
+                  maxLength: 100
+                  example: Tomato
+                notes:
+                  type: string
+                  maxLength: 500
+                  example: Manchas circulares oscuras en hojas inferiores.
+      responses:
+        '200':
+          description: Diagnóstico anónimo completado (no persistido).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiagnosisResponse'
+        '201':
+          description: Diagnóstico autenticado completado y guardado en historial.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiagnosisResponse'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+    get:
+      summary: Listar historial de diagnósticos
+      description: Devuelve el historial paginado de diagnósticos del usuario autenticado, ordenados cronológicamente descendente.
+      operationId: listDiagnoses
+      tags:
+        - Diagnósticos
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 50
+        - name: healthStatus
+          in: query
+          schema:
+            type: string
+            enum: [HEALTHY, DISEASED, INCONCLUSIVE]
+        - name: cropKey
+          in: query
+          schema:
+            type: string
+            example: Tomato
+        - name: from
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Lista paginada de diagnósticos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDiagnosesResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /diagnoses/{id}:
+    get:
+      summary: Consultar detalle de diagnóstico
+      description: Obtiene la información detallada y recomendaciones agronómicas de un diagnóstico. Si pertenece a otro usuario, responde 404.
+      operationId: getDiagnosis
+      tags:
+        - Diagnósticos
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Detalle del diagnóstico.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiagnosisResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+    patch:
+      summary: Actualizar notas y nombre de lote
+      description: Modifica los metadatos de campo (plotName, notes) de un diagnóstico existente.
+      operationId: updateDiagnosisNotes
+      tags:
+        - Diagnósticos
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDiagnosisNotesRequest'
+      responses:
+        '200':
+          description: Notas actualizadas exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  plotName:
+                    type: string
+                    nullable: true
+                  notes:
+                    type: string
+                    nullable: true
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+    delete:
+      summary: Eliminar diagnóstico
+      description: Borra permanentemente el diagnóstico, su feedback y su imagen en almacenamiento.
+      operationId: deleteDiagnosis
+      tags:
+        - Diagnósticos
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Diagnóstico e imagen eliminados.
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /diagnoses/{id}/image:
+    get:
+      summary: Descargar imagen del diagnóstico
+      description: Recupera el archivo binario de la imagen normalizada almacenada para un diagnóstico propio.
+      operationId: getDiagnosisImage
+      tags:
+        - Diagnósticos
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Imagen JPEG del diagnóstico.
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: image/jpeg
+            Cache-Control:
+              schema:
+                type: string
+                example: private, max-age=86400
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /diagnoses/{id}/feedback:
+    post:
+      summary: Enviar retroalimentación sobre la precisión del diagnóstico
+      description: Registra si el veredicto del modelo fue acertado en campo y comentarios adicionales.
+      operationId: submitDiagnosisFeedback
+      tags:
+        - Diagnósticos
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeedbackRequest'
+      responses:
+        '201':
+          description: Feedback guardado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeedbackResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '409':
+          $ref: '#/components/responses/ConflictError'
+
+  /catalog/conditions:
+    get:
+      summary: Listar condiciones fitopatológicas del catálogo
+      description: Consulta pública del catálogo con soporte de filtros por cultivo y estado de salud.
+      operationId: listConditions
+      tags:
+        - Catálogo
+      parameters:
+        - name: cropKey
+          in: query
+          schema:
+            type: string
+            example: Tomato
+        - name: isHealthy
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Lista de condiciones del catálogo.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Condition'
+
+  /catalog/conditions/{classKey}:
+    get:
+      summary: Obtener detalle y manejo de una condición
+      description: Devuelve la descripción técnica, síntomas y guías de manejo agronómico de una clase fitopatológica.
+      operationId: getCondition
+      tags:
+        - Catálogo
+      parameters:
+        - name: classKey
+          in: path
+          required: true
+          schema:
+            type: string
+            example: Tomato___Early_blight
+      responses:
+        '200':
+          description: Detalle de la condición fitopatológica.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Condition'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /catalog/crops:
+    get:
+      summary: Listar cultivos soportados
+      description: Devuelve todos los tipos de cultivos agrícolas identificables por el modelo de IA y el conteo de condiciones.
+      operationId: listCrops
+      tags:
+        - Catálogo
+      responses:
+        '200':
+          description: Lista de cultivos soportados.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CropSummary'
+
+  /model/info:
+    get:
+      summary: Consultar especificaciones del modelo de IA
+      description: Devuelve metadatos técnicos, arquitectura, versión, dataset de entrenamiento y nota de evaluación.
+      operationId: getModelInfo
+      tags:
+        - Modelo IA
+      responses:
+        '200':
+          description: Metadatos del modelo.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelInfo'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Token de acceso JWT en cabecera Authorization (Bearer <token>).
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: refreshToken
+      description: Token de actualización opaco de 256 bits en cookie HttpOnly.
+
+  responses:
+    ValidationError:
+      description: Error de validación de datos de entrada (RFC 9457).
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    UnauthorizedError:
+      description: No autenticado, token inválido o expirado.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    ForbiddenError:
+      description: No autorizado para realizar esta acción.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    NotFoundError:
+      description: Recurso no encontrado.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    ConflictError:
+      description: Conflicto con el estado actual del recurso (ej. correo duplicado o feedback ya enviado).
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    UnsupportedMediaType:
+      description: Tipo de archivo no compatible.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    UnprocessableEntity:
+      description: Entidad no procesable (ej. imagen corrupta o dimensiones insuficientes).
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    ServiceUnavailable:
+      description: Servicio de inferencia o base de datos no disponible temporalmente.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+
+  schemas:
+    ProblemDetails:
+      type: object
+      required:
+        - type
+        - title
+        - status
+        - code
+        - detail
+      properties:
+        type:
+          type: string
+          format: uri
+          example: https://agroguard.dev/errors/validation-error
+        title:
+          type: string
+          example: Error de validación
+        status:
+          type: integer
+          example: 400
+        code:
+          type: string
+          example: VALIDATION_ERROR
+        detail:
+          type: string
+          example: Los datos proporcionados no cumplen con el formato requerido.
+        traceId:
+          type: string
+          example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              message:
+                type: string
+
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+        - service
+        - version
+        - checks
+      properties:
+        status:
+          type: string
+          enum: [UP, DEGRADED, DOWN]
+          example: UP
+        timestamp:
+          type: string
+          format: date-time
+        service:
+          type: string
+          example: agroguard-backend
+        version:
+          type: string
+          example: 1.0.0
+        checks:
+          type: object
+          properties:
+            database:
+              type: string
+              example: connected
+            inferenceEngine:
+              type: string
+              example: mock (ready)
+            storage:
+              type: string
+              example: ready
+
+    RegisterRequest:
+      type: object
+      required:
+        - email
+        - password
+        - fullName
+      properties:
+        email:
+          type: string
+          format: email
+          example: juan.perez@agroguard.dev
+        password:
+          type: string
+          format: password
+          minLength: 8
+          maxLength: 128
+          example: PasswordSeguro123!
+        fullName:
+          type: string
+          minLength: 2
+          maxLength: 100
+          example: Juan Pérez
+
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: juan.perez@agroguard.dev
+        password:
+          type: string
+          format: password
+          example: PasswordSeguro123!
+
+    AuthResponse:
+      type: object
+      required:
+        - accessToken
+        - user
+      properties:
+        accessToken:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        user:
+          $ref: '#/components/schemas/UserProfile'
+
+    UserProfile:
+      type: object
+      required:
+        - id
+        - email
+        - fullName
+        - role
+        - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        fullName:
+          type: string
+        role:
+          type: string
+          enum: [FARMER]
+        createdAt:
+          type: string
+          format: date-time
+
+    DiagnosisResponse:
+      type: object
+      required:
+        - id
+        - persisted
+        - createdAt
+        - verdict
+        - prediction
+        - topPredictions
+        - warnings
+        - model
+        - processingTimeMs
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+        persisted:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        verdict:
+          type: object
+          properties:
+            healthStatus:
+              type: string
+              enum: [HEALTHY, DISEASED, INCONCLUSIVE]
+            confidence:
+              type: number
+              format: float
+              example: 0.945
+            healthyProbability:
+              type: number
+              format: float
+              example: 0.012
+        prediction:
+          type: object
+          properties:
+            classKey:
+              type: string
+              example: Tomato___Early_blight
+            cropKey:
+              type: string
+              example: Tomato
+            conditionKey:
+              type: string
+              example: Early_blight
+            cropName:
+              type: string
+              example: Tomate
+            conditionName:
+              type: string
+              example: Tizón temprano (Alternaria)
+        topPredictions:
+          type: array
+          items:
+            type: object
+            properties:
+              classKey:
+                type: string
+              probability:
+                type: number
+        warnings:
+          type: array
+          items:
+            type: string
+            enum: [LOW_CONFIDENCE, CROP_MISMATCH, LOW_RESOLUTION]
+        message:
+          type: string
+          nullable: true
+        recommendation:
+          type: object
+          nullable: true
+          properties:
+            reviewStatus:
+              type: string
+              enum: [PENDING_REVIEW, REVIEWED]
+            summary:
+              type: string
+            generalAdvice:
+              type: string
+            actions:
+              type: array
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum: [cultural, biological, chemical]
+                  description:
+                    type: string
+        model:
+          type: object
+          properties:
+            name:
+              type: string
+            version:
+              type: string
+            provider:
+              type: string
+        processingTimeMs:
+          type: integer
+        context:
+          type: object
+          properties:
+            plotName:
+              type: string
+              nullable: true
+            cropHint:
+              type: string
+              nullable: true
+            notes:
+              type: string
+              nullable: true
+        image:
+          type: object
+          nullable: true
+          properties:
+            url:
+              type: string
+            width:
+              type: integer
+            height:
+              type: integer
+
+    PaginatedDiagnosesResponse:
+      type: object
+      required:
+        - items
+        - page
+        - pageSize
+        - totalItems
+        - totalPages
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiagnosisResponse'
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalItems:
+          type: integer
+        totalPages:
+          type: integer
+
+    UpdateDiagnosisNotesRequest:
+      type: object
+      properties:
+        plotName:
+          type: string
+          maxLength: 100
+        notes:
+          type: string
+          maxLength: 500
+
+    FeedbackRequest:
+      type: object
+      required:
+        - wasCorrect
+      properties:
+        wasCorrect:
+          type: boolean
+        correctClassKey:
+          type: string
+          nullable: true
+        comment:
+          type: string
+          maxLength: 500
+          nullable: true
+
+    FeedbackResponse:
+      type: object
+      required:
+        - id
+        - diagnosisId
+        - wasCorrect
+        - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+        diagnosisId:
+          type: string
+          format: uuid
+        wasCorrect:
+          type: boolean
+        correctClassKey:
+          type: string
+          nullable: true
+        comment:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+
+    Condition:
+      type: object
+      required:
+        - classKey
+        - cropKey
+        - conditionKey
+        - isHealthy
+        - names
+      properties:
+        classKey:
+          type: string
+          example: Tomato___Early_blight
+        cropKey:
+          type: string
+          example: Tomato
+        conditionKey:
+          type: string
+          example: Early_blight
+        isHealthy:
+          type: boolean
+        names:
+          type: object
+          properties:
+            es:
+              type: object
+              properties:
+                cropName:
+                  type: string
+                conditionName:
+                  type: string
+        description:
+          type: string
+        symptoms:
+          type: array
+          items:
+            type: string
+        management:
+          type: object
+          properties:
+            cultural:
+              type: array
+              items:
+                type: string
+            biological:
+              type: array
+              items:
+                type: string
+            chemical:
+              type: array
+              items:
+                type: string
+        reviewStatus:
+          type: string
+          enum: [PENDING_REVIEW, REVIEWED]
+        reviewedBy:
+          type: string
+          nullable: true
+        reviewedAt:
+          type: string
+          format: date-time
+          nullable: true
+        sources:
+          type: array
+          items:
+            type: string
+
+    CropSummary:
+      type: object
+      required:
+        - cropKey
+        - cropName
+        - conditionsCount
+      properties:
+        cropKey:
+          type: string
+          example: Tomato
+        cropName:
+          type: string
+          example: Tomate
+        conditionsCount:
+          type: integer
+          example: 10
+
+    ModelInfo:
+      type: object
+      required:
+        - name
+        - version
+        - inputSize
+        - classCount
+        - dataset
+      properties:
+        name:
+          type: string
+          example: ResNet50_Transfer
+        version:
+          type: string
+          example: 1.0.0
+        inputSize:
+          type: integer
+          example: 224
+        classCount:
+          type: integer
+          example: 38
+        dataset:
+          type: string
+          example: New Plant Diseases Dataset (Augmented)
+        metrics:
+          type: object
+          nullable: true
+        evaluationNote:
+          type: string
+          example: Métricas pendientes de verificación con una evaluación reproducible
