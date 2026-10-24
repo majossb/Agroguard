@@ -1,0 +1,114 @@
+{
+  "reportId": "8be2c099-9d1f-4e9a-89c4-0c950cac556a",
+  "createdAt": "2026-10-21T12:11:48.068Z",
+  "verdict": {
+    "healthStatus": "INCONCLUSIVE",
+    "confidence": 0.347461,
+    "healthyProbability": 0.156475
+  },
+  "prediction": {
+    "classKey": "Apple___Apple_scab",
+    "cropKey": "Apple",
+    "conditionKey": "Apple_scab",
+    "cropName": "Manzana",
+    "conditionName": "Sarna del manzano (Venturia inaequalis)"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Apple___Apple_scab",
+      "probability": 0.347461
+    },
+    {
+      "classKey": "Apple___Black_rot",
+      "probability": 0.333858
+    },
+    {
+      "classKey": "Pepper,_bell___healthy",
+      "probability": 0.068561
+    }
+  ],
+  "warnings": [
+    "LOW_CONFIDENCE",
+    "LOW_RESOLUTION"
+  ],
+  "message": "No pudimos identificar la hoja con seguridad. Toma otra foto con luz natural, fondo neutro y la hoja centrada.",
+  "recommendation": null,
+  "model": {
+    "name": "AgroGuard_Weighted_Voting_Ensemble_v1",
+    "version": "1.0.0",
+    "provider": "ensemble"
+  },
+  "ensembleBreakdown": {
+    "weights": {
+      "EfficientNetB0": 0.35,
+      "ResNet50": 0.3,
+      "MobileNetV2": 0.2,
+      "CNN_Base": 0.15
+    },
+    "models": [
+      {
+        "modelKey": "EfficientNetB0",
+        "displayName": "EfficientNet-B0 (Transfer)",
+        "weight": 0.35,
+        "topClassKey": "Apple___Apple_scab",
+        "topCropName": "Manzana",
+        "topConditionName": "Sarna del manzano (Venturia inaequalis)",
+        "individualConfidence": 0.9927,
+        "contribution": 0.3475,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "ResNet50",
+        "displayName": "ResNet-50 (Residual Deep)",
+        "weight": 0.3,
+        "topClassKey": "Apple___Black_rot",
+        "topCropName": "Manzana",
+        "topConditionName": "Podredumbre negra",
+        "individualConfidence": 0.6449,
+        "contribution": 0,
+        "agreesWithEnsemble": false
+      },
+      {
+        "modelKey": "MobileNetV2",
+        "displayName": "MobileNet-V2 (Edge Optimized)",
+        "weight": 0.2,
+        "topClassKey": "Pepper,_bell___healthy",
+        "topCropName": "Pimiento / Pimentón",
+        "topConditionName": "Hoja sana",
+        "individualConfidence": 0.3428,
+        "contribution": 0,
+        "agreesWithEnsemble": false
+      },
+      {
+        "modelKey": "CNN_Base",
+        "displayName": "CNN Base (Baseline ConvNet)",
+        "weight": 0.15,
+        "topClassKey": "Apple___Black_rot",
+        "topCropName": "Manzana",
+        "topConditionName": "Podredumbre negra",
+        "individualConfidence": 0.9359,
+        "contribution": 0,
+        "agreesWithEnsemble": false
+      }
+    ],
+    "consensus": {
+      "agreeingCount": 1,
+      "totalCount": 4,
+      "ratio": 0.25,
+      "level": "DIVERGENT",
+      "label": "Discrepancia entre arquitecturas (1/4 modelos)"
+    },
+    "latencyMs": 1562.67,
+    "winningClassKey": "Apple___Apple_scab",
+    "globalConfidence": 0.3475
+  },
+  "processingTimeMs": 1581,
+  "imageMetadata": {
+    "width": 1000,
+    "height": 424,
+    "sizeBytes": 68158,
+    "mimeType": "image/jpeg",
+    "sha256": "4d4387677b74c3661b3167739b81e839f87c1dcd7d3d11282e2229e41386ae53"
+  },
+  "context": {}
+}

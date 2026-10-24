@@ -1,0 +1,114 @@
+{
+  "reportId": "1757bff5-7b2c-4bc3-9fcb-d9ef39e26fba",
+  "createdAt": "2026-10-21T12:13:18.567Z",
+  "verdict": {
+    "healthStatus": "INCONCLUSIVE",
+    "confidence": 0.345764,
+    "healthyProbability": 0.047084
+  },
+  "prediction": {
+    "classKey": "Apple___Cedar_apple_rust",
+    "cropKey": "Apple",
+    "conditionKey": "Cedar_apple_rust",
+    "cropName": "Manzana",
+    "conditionName": "Roya del cedro y manzano"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Apple___Cedar_apple_rust",
+      "probability": 0.345764
+    },
+    {
+      "classKey": "Strawberry___Leaf_scorch",
+      "probability": 0.264618
+    },
+    {
+      "classKey": "Corn_(maize)___Northern_Leaf_Blight",
+      "probability": 0.137118
+    }
+  ],
+  "warnings": [
+    "LOW_CONFIDENCE",
+    "LOW_RESOLUTION"
+  ],
+  "message": "No pudimos identificar la hoja con seguridad. Toma otra foto con luz natural, fondo neutro y la hoja centrada.",
+  "recommendation": null,
+  "model": {
+    "name": "AgroGuard_Weighted_Voting_Ensemble_v1",
+    "version": "1.0.0",
+    "provider": "ensemble"
+  },
+  "ensembleBreakdown": {
+    "weights": {
+      "EfficientNetB0": 0.35,
+      "ResNet50": 0.3,
+      "MobileNetV2": 0.2,
+      "CNN_Base": 0.15
+    },
+    "models": [
+      {
+        "modelKey": "EfficientNetB0",
+        "displayName": "EfficientNet-B0 (Transfer)",
+        "weight": 0.35,
+        "topClassKey": "Strawberry___Leaf_scorch",
+        "topCropName": "Fresa / Frutilla",
+        "topConditionName": "Quemadura de la hoja",
+        "individualConfidence": 0.5988,
+        "contribution": 0,
+        "agreesWithEnsemble": false
+      },
+      {
+        "modelKey": "ResNet50",
+        "displayName": "ResNet-50 (Residual Deep)",
+        "weight": 0.3,
+        "topClassKey": "Apple___Cedar_apple_rust",
+        "topCropName": "Manzana",
+        "topConditionName": "Roya del cedro y manzano",
+        "individualConfidence": 0.6442,
+        "contribution": 0.1933,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "MobileNetV2",
+        "displayName": "MobileNet-V2 (Edge Optimized)",
+        "weight": 0.2,
+        "topClassKey": "Apple___Cedar_apple_rust",
+        "topCropName": "Manzana",
+        "topConditionName": "Roya del cedro y manzano",
+        "individualConfidence": 0.7624,
+        "contribution": 0.1525,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "CNN_Base",
+        "displayName": "CNN Base (Baseline ConvNet)",
+        "weight": 0.15,
+        "topClassKey": "Corn_(maize)___Northern_Leaf_Blight",
+        "topCropName": "Maíz",
+        "topConditionName": "Tizón foliar del norte",
+        "individualConfidence": 0.914,
+        "contribution": 0,
+        "agreesWithEnsemble": false
+      }
+    ],
+    "consensus": {
+      "agreeingCount": 2,
+      "totalCount": 4,
+      "ratio": 0.5,
+      "level": "MODERATE",
+      "label": "Consenso Parcial (2/4 modelos coinciden)"
+    },
+    "latencyMs": 1395.02,
+    "winningClassKey": "Apple___Cedar_apple_rust",
+    "globalConfidence": 0.3458
+  },
+  "processingTimeMs": 1410,
+  "imageMetadata": {
+    "width": 300,
+    "height": 400,
+    "sizeBytes": 31351,
+    "mimeType": "image/jpeg",
+    "sha256": "7409f4aea6df25218ef70fd173c8bea71d05b791d131bb91dce745cc728f5f5f"
+  },
+  "context": {}
+}

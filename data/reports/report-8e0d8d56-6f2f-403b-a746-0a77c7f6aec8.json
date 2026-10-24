@@ -1,0 +1,113 @@
+{
+  "reportId": "8e0d8d56-6f2f-403b-a746-0a77c7f6aec8",
+  "createdAt": "2026-10-21T11:39:06.957Z",
+  "verdict": {
+    "healthStatus": "INCONCLUSIVE",
+    "confidence": 0.460004,
+    "healthyProbability": 0.6572739999999999
+  },
+  "prediction": {
+    "classKey": "Corn_(maize)___healthy",
+    "cropKey": "Corn_(maize)",
+    "conditionKey": "healthy",
+    "cropName": "Maíz",
+    "conditionName": "Hoja sana"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Corn_(maize)___healthy",
+      "probability": 0.460004
+    },
+    {
+      "classKey": "Tomato___Late_blight",
+      "probability": 0.317687
+    },
+    {
+      "classKey": "Pepper,_bell___healthy",
+      "probability": 0.157698
+    }
+  ],
+  "warnings": [
+    "LOW_CONFIDENCE"
+  ],
+  "message": "No pudimos identificar la hoja con seguridad. Toma otra foto con luz natural, fondo neutro y la hoja centrada.",
+  "recommendation": null,
+  "model": {
+    "name": "AgroGuard_Weighted_Voting_Ensemble_v1",
+    "version": "1.0.0",
+    "provider": "ensemble"
+  },
+  "ensembleBreakdown": {
+    "weights": {
+      "EfficientNetB0": 0.35,
+      "ResNet50": 0.3,
+      "MobileNetV2": 0.2,
+      "CNN_Base": 0.15
+    },
+    "models": [
+      {
+        "modelKey": "EfficientNetB0",
+        "displayName": "EfficientNet-B0 (Transfer)",
+        "weight": 0.35,
+        "topClassKey": "Corn_(maize)___healthy",
+        "topCropName": "Maíz",
+        "topConditionName": "Hoja sana",
+        "individualConfidence": 0.474,
+        "contribution": 0.1659,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "ResNet50",
+        "displayName": "ResNet-50 (Residual Deep)",
+        "weight": 0.3,
+        "topClassKey": "Pepper,_bell___healthy",
+        "topCropName": "Pimiento / Pimentón",
+        "topConditionName": "Hoja sana",
+        "individualConfidence": 0.5216,
+        "contribution": 0.1375,
+        "agreesWithEnsemble": false
+      },
+      {
+        "modelKey": "MobileNetV2",
+        "displayName": "MobileNet-V2 (Edge Optimized)",
+        "weight": 0.2,
+        "topClassKey": "Tomato___Late_blight",
+        "topCropName": "Tomate",
+        "topConditionName": "Tizón tardío (Phytophthora)",
+        "individualConfidence": 0.9412,
+        "contribution": 0.0066,
+        "agreesWithEnsemble": false
+      },
+      {
+        "modelKey": "CNN_Base",
+        "displayName": "CNN Base (Baseline ConvNet)",
+        "weight": 0.15,
+        "topClassKey": "Corn_(maize)___healthy",
+        "topCropName": "Maíz",
+        "topConditionName": "Hoja sana",
+        "individualConfidence": 1,
+        "contribution": 0.15,
+        "agreesWithEnsemble": true
+      }
+    ],
+    "consensus": {
+      "agreeingCount": 2,
+      "totalCount": 4,
+      "ratio": 0.5,
+      "level": "MODERATE",
+      "label": "Consenso Parcial (2/4 modelos coinciden)"
+    },
+    "latencyMs": 736.22,
+    "winningClassKey": "Corn_(maize)___healthy",
+    "globalConfidence": 0.46
+  },
+  "processingTimeMs": 3329,
+  "imageMetadata": {
+    "width": 600,
+    "height": 600,
+    "sizeBytes": 2434,
+    "mimeType": "image/jpeg",
+    "sha256": "5e6185c623217df6b0c21fae335e4e81cb596ef5efad404bf7a51cfb02ca6568"
+  },
+  "context": {}
+}

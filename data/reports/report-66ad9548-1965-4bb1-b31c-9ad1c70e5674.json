@@ -1,0 +1,118 @@
+{
+  "reportId": "66ad9548-1965-4bb1-b31c-9ad1c70e5674",
+  "createdAt": "2026-10-21T11:45:39.396Z",
+  "verdict": {
+    "healthStatus": "HEALTHY",
+    "confidence": 0.999998,
+    "healthyProbability": 1
+  },
+  "prediction": {
+    "classKey": "Apple___healthy",
+    "cropKey": "Apple",
+    "conditionKey": "healthy",
+    "cropName": "Manzana",
+    "conditionName": "Hoja sana"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Apple___healthy",
+      "probability": 0.999998
+    },
+    {
+      "classKey": "Blueberry___healthy",
+      "probability": 0.000002
+    },
+    {
+      "classKey": "Apple___Apple_scab",
+      "probability": 0
+    }
+  ],
+  "warnings": [
+    "LOW_RESOLUTION"
+  ],
+  "message": null,
+  "recommendation": {
+    "reviewStatus": "PENDING_REVIEW",
+    "summary": "Diagnóstico para Manzana: Hoja sana.",
+    "generalAdvice": "Consulta a un ingeniero agrónomo antes de aplicar cualquier tratamiento.",
+    "actions": []
+  },
+  "model": {
+    "name": "AgroGuard_Weighted_Voting_Ensemble_v1",
+    "version": "1.0.0",
+    "provider": "ensemble"
+  },
+  "ensembleBreakdown": {
+    "weights": {
+      "EfficientNetB0": 0.35,
+      "ResNet50": 0.3,
+      "MobileNetV2": 0.2,
+      "CNN_Base": 0.15
+    },
+    "models": [
+      {
+        "modelKey": "EfficientNetB0",
+        "displayName": "EfficientNet-B0 (Transfer)",
+        "weight": 0.35,
+        "topClassKey": "Apple___healthy",
+        "topCropName": "Manzana",
+        "topConditionName": "Hoja sana",
+        "individualConfidence": 1,
+        "contribution": 0.35,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "ResNet50",
+        "displayName": "ResNet-50 (Residual Deep)",
+        "weight": 0.3,
+        "topClassKey": "Apple___healthy",
+        "topCropName": "Manzana",
+        "topConditionName": "Hoja sana",
+        "individualConfidence": 1,
+        "contribution": 0.3,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "MobileNetV2",
+        "displayName": "MobileNet-V2 (Edge Optimized)",
+        "weight": 0.2,
+        "topClassKey": "Apple___healthy",
+        "topCropName": "Manzana",
+        "topConditionName": "Hoja sana",
+        "individualConfidence": 1,
+        "contribution": 0.2,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "CNN_Base",
+        "displayName": "CNN Base (Baseline ConvNet)",
+        "weight": 0.15,
+        "topClassKey": "Apple___healthy",
+        "topCropName": "Manzana",
+        "topConditionName": "Hoja sana",
+        "individualConfidence": 1,
+        "contribution": 0.15,
+        "agreesWithEnsemble": true
+      }
+    ],
+    "consensus": {
+      "agreeingCount": 4,
+      "totalCount": 4,
+      "ratio": 1,
+      "level": "UNANIMOUS",
+      "label": "Consenso Unánime (4/4 modelos coinciden)"
+    },
+    "latencyMs": 658.84,
+    "winningClassKey": "Apple___healthy",
+    "globalConfidence": 1
+  },
+  "processingTimeMs": 664,
+  "imageMetadata": {
+    "width": 256,
+    "height": 256,
+    "sizeBytes": 18894,
+    "mimeType": "image/jpeg",
+    "sha256": "42f048df5c85d4d50884fc164be3962d17e7fcbd6e0796a303c9d363bbecd3c6"
+  },
+  "context": {}
+}

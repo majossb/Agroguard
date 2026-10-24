@@ -1,3 +1,5 @@
+import fs from 'fs/promises';
+import path from 'path';
 import { Diagnosis } from '../../../domain/entities/Diagnosis.js';
 import { DiagnosisInterpreter } from '../../../domain/services/DiagnosisInterpreter.js';
 import { ValidationError } from '../../../domain/errors/DomainError.js';
@@ -168,6 +170,48 @@ export class CreateDiagnosis {
       }
     }
 
+    // 6. Generación y persistencia real del reporte en formato JSON
+    const reportId = diagnosisId || `anon-${now.getTime()}`;
+    const reportData = {
+      reportId,
+      createdAt: now.toISOString(),
+      verdict: {
+        healthStatus: interpreted.verdict.healthStatus.value,
+        confidence: interpreted.verdict.confidence,
+        healthyProbability: interpreted.verdict.healthyProbability,
+      },
+      prediction: interpreted.prediction,
+      topPredictions: interpreted.topPredictions,
+      warnings: interpreted.warnings,
+      message: interpreted.message,
+      recommendation,
+      model: {
+        name: inferenceResult.modelName,
+        version: inferenceResult.modelVersion,
+        provider: inferenceResult.provider,
+      },
+      ensembleBreakdown: inferenceResult.ensembleBreakdown || null,
+      processingTimeMs,
+      imageMetadata: {
+        width: processedImage.width,
+        height: processedImage.height,
+        sizeBytes: processedImage.sizeBytes,
+        mimeType: processedImage.mimeType,
+        sha256: processedImage.sha256,
+      },
+      context: { plotName, cropHint, notes },
+    };
+
+    // Guardar reporte en archivo JSON persistente
+    try {
+      const reportsDir = path.resolve('data/reports');
+      await fs.mkdir(reportsDir, { recursive: true });
+      const reportFilePath = path.join(reportsDir, `report-${reportId}.json`);
+      await fs.writeFile(reportFilePath, JSON.stringify(reportData, null, 2), 'utf-8');
+    } catch {
+      // Continuar si hay algún fallo al escribir en disco para no bloquear la respuesta
+    }
+
     return {
       id: diagnosisId,
       persisted,
@@ -187,6 +231,8 @@ export class CreateDiagnosis {
         version: inferenceResult.modelVersion,
         provider: inferenceResult.provider,
       },
+      ensembleBreakdown: inferenceResult.ensembleBreakdown || null,
+      report: reportData,
       processingTimeMs,
       image: persisted
         ? {

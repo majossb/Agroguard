@@ -1,0 +1,60 @@
+{
+  "reportId": "anon-1789916400000",
+  "createdAt": "2026-09-20T15:00:00.000Z",
+  "verdict": {
+    "healthStatus": "DISEASED",
+    "confidence": 0.945,
+    "healthyProbability": 0.017837837837837857
+  },
+  "prediction": {
+    "classKey": "Tomato___Early_blight",
+    "cropKey": "Tomato",
+    "conditionKey": "Early_blight",
+    "cropName": "Tomate",
+    "conditionName": "Tizón temprano (Alternaria)"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Tomato___Early_blight",
+      "probability": 0.945
+    },
+    {
+      "classKey": "Apple___Apple_scab",
+      "probability": 0.0014864864864864878
+    },
+    {
+      "classKey": "Apple___Black_rot",
+      "probability": 0.0014864864864864878
+    }
+  ],
+  "warnings": [],
+  "message": null,
+  "recommendation": {
+    "reviewStatus": "REVIEWED",
+    "summary": "Enfermedad fungosa común en tomate.",
+    "generalAdvice": "Aplica las siguientes medidas integradas de manejo.",
+    "actions": [
+      {
+        "type": "cultural",
+        "description": "Rotación de cultivos"
+      }
+    ]
+  },
+  "model": {
+    "name": "FakeModel",
+    "version": "1.0.0",
+    "provider": "mock"
+  },
+  "ensembleBreakdown": null,
+  "processingTimeMs": 0,
+  "imageMetadata": {
+    "width": 800,
+    "height": 600,
+    "sizeBytes": 28,
+    "mimeType": "image/jpeg",
+    "sha256": "bebe1a5f5c2af5a8fdd4bc330674a1217b27df9495529a3d02a6dd0fdc30381c"
+  },
+  "context": {
+    "cropHint": "tomato"
+  }
+}

@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const booleanStringSchema = z
   .union([z.boolean(), z.string()])
@@ -40,9 +42,14 @@ const envSchema = z
           .filter(Boolean)
       ),
 
-    INFERENCE_DRIVER: z.enum(['mock', 'http']).default('mock'),
+    INFERENCE_DRIVER: z
+      .enum(['ensemble', 'http', 'mock'])
+      .default(process.env.NODE_ENV === 'test' ? 'mock' : 'ensemble'),
     INFERENCE_URL: z.string().url().default('http://localhost:8000'),
-    INFERENCE_TIMEOUT_MS: z.coerce.number().int().positive().default(10000),
+    INFERENCE_TIMEOUT_MS: z.coerce.number().int().positive().default(30000),
+    PYTHON_BIN: z.string().default('/home/pablo/env/bin/python3'),
+    MODEL_ROOT: z.string().default('agroguard_modelos_completos'),
+    REPORTS_DIR: z.string().default('data/reports'),
     MIN_CONFIDENCE: z
       .coerce
       .number()

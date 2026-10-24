@@ -4,7 +4,9 @@ import { logger } from '../infrastructure/logging/logger.js';
 import { loadClassNames } from '../infrastructure/config/classNamesLoader.js';
 import { SystemClock } from '../infrastructure/system/SystemClock.js';
 import { UuidGenerator } from '../infrastructure/system/UuidGenerator.js';
+import path from 'path';
 import { SharpImageProcessor } from '../infrastructure/image/SharpImageProcessor.js';
+import { PythonEnsembleInferenceEngine } from '../infrastructure/inference/PythonEnsembleInferenceEngine.js';
 import { MockInferenceEngine } from '../infrastructure/inference/MockInferenceEngine.js';
 import { HttpInferenceEngine } from '../infrastructure/inference/HttpInferenceEngine.js';
 import { LocalDiskImageStorage } from '../infrastructure/storage/LocalDiskImageStorage.js';
@@ -82,7 +84,16 @@ export function createContainer(overrides = {}) {
 
   let inferenceEngine = overrides.inferenceEngine;
   if (!inferenceEngine) {
-    if (config.INFERENCE_DRIVER === 'http') {
+    if (config.INFERENCE_DRIVER === 'ensemble') {
+      inferenceEngine = new PythonEnsembleInferenceEngine({
+        pythonBin: config.PYTHON_BIN,
+        scriptPath: path.resolve('scripts/inference_ensemble.py'),
+        modelDir: path.resolve(config.MODEL_ROOT),
+        classNames: validClassKeys,
+        logger,
+        timeoutMs: config.INFERENCE_TIMEOUT_MS,
+      });
+    } else if (config.INFERENCE_DRIVER === 'http') {
       inferenceEngine = new HttpInferenceEngine({
         url: config.INFERENCE_URL,
         timeoutMs: config.INFERENCE_TIMEOUT_MS,

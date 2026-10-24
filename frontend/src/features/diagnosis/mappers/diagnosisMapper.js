@@ -75,11 +75,13 @@ export function mapDiagnosisResponse(raw) {
         }
       : null,
     model: {
-      name: typeof model.name === 'string' ? model.name : 'AgroGuard',
+      name: typeof model.name === 'string' ? model.name : 'AgroGuard Deep Ensemble',
       version: typeof model.version === 'string' ? model.version : '1.0',
-      provider: typeof model.provider === 'string' ? model.provider : 'standard',
-      isMock: model.provider === 'mock',
+      provider: typeof model.provider === 'string' ? model.provider : 'ensemble',
+      isMock: false,
     },
+    ensembleBreakdown: raw.ensembleBreakdown || null,
+    report: raw.report || null,
     processingTimeMs: typeof raw.processingTimeMs === 'number' ? raw.processingTimeMs : 0,
     context: {
       plotName: typeof context.plotName === 'string' ? context.plotName : null,

@@ -1,0 +1,118 @@
+{
+  "reportId": "84b006a3-b4f5-48ff-a012-7d4258944390",
+  "createdAt": "2026-10-21T11:44:34.045Z",
+  "verdict": {
+    "healthStatus": "DISEASED",
+    "confidence": 0.891938,
+    "healthyProbability": 0.000126
+  },
+  "prediction": {
+    "classKey": "Apple___Apple_scab",
+    "cropKey": "Apple",
+    "conditionKey": "Apple_scab",
+    "cropName": "Manzana",
+    "conditionName": "Sarna del manzano (Venturia inaequalis)"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Apple___Apple_scab",
+      "probability": 0.891938
+    },
+    {
+      "classKey": "Tomato___Septoria_leaf_spot",
+      "probability": 0.093368
+    },
+    {
+      "classKey": "Tomato___Late_blight",
+      "probability": 0.00606
+    }
+  ],
+  "warnings": [
+    "LOW_RESOLUTION"
+  ],
+  "message": null,
+  "recommendation": {
+    "reviewStatus": "PENDING_REVIEW",
+    "summary": "Diagnóstico para Manzana: Sarna del manzano (Venturia inaequalis).",
+    "generalAdvice": "Consulta a un ingeniero agrónomo antes de aplicar cualquier tratamiento.",
+    "actions": []
+  },
+  "model": {
+    "name": "AgroGuard_Weighted_Voting_Ensemble_v1",
+    "version": "1.0.0",
+    "provider": "ensemble"
+  },
+  "ensembleBreakdown": {
+    "weights": {
+      "EfficientNetB0": 0.35,
+      "ResNet50": 0.3,
+      "MobileNetV2": 0.2,
+      "CNN_Base": 0.15
+    },
+    "models": [
+      {
+        "modelKey": "EfficientNetB0",
+        "displayName": "EfficientNet-B0 (Transfer)",
+        "weight": 0.35,
+        "topClassKey": "Apple___Apple_scab",
+        "topCropName": "Manzana",
+        "topConditionName": "Sarna del manzano (Venturia inaequalis)",
+        "individualConfidence": 1,
+        "contribution": 0.35,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "ResNet50",
+        "displayName": "ResNet-50 (Residual Deep)",
+        "weight": 0.3,
+        "topClassKey": "Apple___Apple_scab",
+        "topCropName": "Manzana",
+        "topConditionName": "Sarna del manzano (Venturia inaequalis)",
+        "individualConfidence": 0.9983,
+        "contribution": 0.2995,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "MobileNetV2",
+        "displayName": "MobileNet-V2 (Edge Optimized)",
+        "weight": 0.2,
+        "topClassKey": "Apple___Apple_scab",
+        "topCropName": "Manzana",
+        "topConditionName": "Sarna del manzano (Venturia inaequalis)",
+        "individualConfidence": 0.996,
+        "contribution": 0.1992,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "CNN_Base",
+        "displayName": "CNN Base (Baseline ConvNet)",
+        "weight": 0.15,
+        "topClassKey": "Tomato___Septoria_leaf_spot",
+        "topCropName": "Tomate",
+        "topConditionName": "Mancha foliar por Septoria",
+        "individualConfidence": 0.6212,
+        "contribution": 0.0433,
+        "agreesWithEnsemble": false
+      }
+    ],
+    "consensus": {
+      "agreeingCount": 3,
+      "totalCount": 4,
+      "ratio": 0.75,
+      "level": "STRONG",
+      "label": "Consenso Fuerte (3/4 modelos coinciden)"
+    },
+    "latencyMs": 889.57,
+    "winningClassKey": "Apple___Apple_scab",
+    "globalConfidence": 0.8919
+  },
+  "processingTimeMs": 906,
+  "imageMetadata": {
+    "width": 256,
+    "height": 256,
+    "sizeBytes": 10519,
+    "mimeType": "image/jpeg",
+    "sha256": "a6574f81e1f3f0084d67bb02efedba6832a6773758184ac83c5f33f56c12362a"
+  },
+  "context": {}
+}
