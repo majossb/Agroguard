@@ -9,6 +9,8 @@ import {
   InvalidImageError,
   InferenceUnavailableError,
   InvalidInferenceResultError,
+  ImageRejectedError,
+  ImageReviewRequiredError,
 } from '../../../domain/errors/index.js';
 
 /**
@@ -78,6 +80,45 @@ export function createErrorHandler(logger) {
       title = 'Imagen inválida';
       detail = err.message;
       typeSlug = 'invalid-image';
+    } else if (err instanceof ImageRejectedError) {
+      status = 422;
+      code = 'IMAGE_REJECTED';
+      title = 'Imagen rechazada por el filtro de validación visual';
+      detail = err.message;
+      typeSlug = 'image-rejected';
+      const payload = {
+        type: `https://agroguard.dev/errors/${typeSlug}`,
+        title,
+        status,
+        code,
+        detail,
+        validationState: 'RECHAZAR',
+        validationReason: err.reason || err.message,
+        clipTopLabels: err.topLabels || [],
+        traceId,
+        errors,
+      };
+      logger.warn({ code, status, detail, traceId, path: req.path }, 'Client/Business Handled Error');
+      res.status(status).type('application/problem+json').json(payload);
+      return;
+    } else if (err instanceof ImageReviewRequiredError) {
+      // REVISAR: HTTP 200, no es un error sino un resultado parcial sin predicción
+      const payload = {
+        type: 'https://agroguard.dev/results/review-required',
+        title: 'Imagen con resultado ambiguo',
+        status: 200,
+        code: 'IMAGE_REVIEW_REQUIRED',
+        validationState: 'REVISAR',
+        validationReason: err.reason || err.message,
+        clipTopLabels: err.topLabels || [],
+        detail: err.message,
+        traceId,
+        errors: [],
+      };
+      logger.warn({ code: payload.code, status: 200, detail: err.message, traceId, path: req.path }, 'Client/Business Handled Warning');
+      res.status(200).type('application/json').json(payload);
+      return;
+
     } else if (err instanceof InvalidInferenceResultError) {
       status = 502;
       code = err.code || 'INVALID_INFERENCE_RESULT';

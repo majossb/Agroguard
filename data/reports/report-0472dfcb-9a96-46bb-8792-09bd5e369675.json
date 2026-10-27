@@ -1,0 +1,116 @@
+{
+  "reportId": "0472dfcb-9a96-46bb-8792-09bd5e369675",
+  "createdAt": "2026-10-27T02:04:41.961Z",
+  "verdict": {
+    "healthStatus": "DISEASED",
+    "confidence": 0.749547,
+    "healthyProbability": 0.19428700000000002
+  },
+  "prediction": {
+    "classKey": "Apple___Apple_scab",
+    "cropKey": "Apple",
+    "conditionKey": "Apple_scab",
+    "cropName": "Manzana",
+    "conditionName": "Sarna del manzano (Venturia inaequalis)"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Apple___Apple_scab",
+      "probability": 0.749547
+    },
+    {
+      "classKey": "Pepper,_bell___healthy",
+      "probability": 0.171146
+    },
+    {
+      "classKey": "Tomato___Early_blight",
+      "probability": 0.02526
+    }
+  ],
+  "warnings": [],
+  "message": null,
+  "recommendation": {
+    "reviewStatus": "PENDING_REVIEW",
+    "summary": "Diagnóstico para Manzana: Sarna del manzano (Venturia inaequalis).",
+    "generalAdvice": "Consulta a un ingeniero agrónomo antes de aplicar cualquier tratamiento.",
+    "actions": []
+  },
+  "model": {
+    "name": "AgroGuard_Weighted_Voting_Ensemble_v1",
+    "version": "1.0.0",
+    "provider": "ensemble"
+  },
+  "ensembleBreakdown": {
+    "weights": {
+      "EfficientNetB0": 0.35,
+      "ResNet50": 0.3,
+      "MobileNetV2": 0.2,
+      "CNN_Base": 0.15
+    },
+    "models": [
+      {
+        "modelKey": "EfficientNetB0",
+        "displayName": "EfficientNet-B0 (Transfer)",
+        "weight": 0.35,
+        "topClassKey": "Apple___Apple_scab",
+        "topCropName": "Manzana",
+        "topConditionName": "Sarna del manzano (Venturia inaequalis)",
+        "individualConfidence": 0.8954,
+        "contribution": 0.3134,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "ResNet50",
+        "displayName": "ResNet-50 (Residual Deep)",
+        "weight": 0.3,
+        "topClassKey": "Apple___Apple_scab",
+        "topCropName": "Manzana",
+        "topConditionName": "Sarna del manzano (Venturia inaequalis)",
+        "individualConfidence": 0.9538,
+        "contribution": 0.2861,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "MobileNetV2",
+        "displayName": "MobileNet-V2 (Edge Optimized)",
+        "weight": 0.2,
+        "topClassKey": "Pepper,_bell___healthy",
+        "topCropName": "Pimiento / Pimentón",
+        "topConditionName": "Hoja sana",
+        "individualConfidence": 0.8556,
+        "contribution": 0,
+        "agreesWithEnsemble": false
+      },
+      {
+        "modelKey": "CNN_Base",
+        "displayName": "CNN Base (Baseline ConvNet)",
+        "weight": 0.15,
+        "topClassKey": "Apple___Apple_scab",
+        "topCropName": "Manzana",
+        "topConditionName": "Sarna del manzano (Venturia inaequalis)",
+        "individualConfidence": 1,
+        "contribution": 0.15,
+        "agreesWithEnsemble": true
+      }
+    ],
+    "consensus": {
+      "agreeingCount": 3,
+      "totalCount": 4,
+      "ratio": 0.75,
+      "level": "STRONG",
+      "label": "Consenso Fuerte (3/4 modelos coinciden)"
+    },
+    "latencyMs": 1081.32,
+    "winningClassKey": "Apple___Apple_scab",
+    "globalConfidence": 0.7495
+  },
+  "processingTimeMs": 1119,
+  "imageMetadata": {
+    "width": 1600,
+    "height": 900,
+    "sizeBytes": 121645,
+    "mimeType": "image/jpeg",
+    "sha256": "78b8d03fa8185f96f22a9ed584905f275bbbf7cca2c878073c137de68659b094"
+  },
+  "context": {}
+}

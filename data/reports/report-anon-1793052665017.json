@@ -1,0 +1,50 @@
+{
+  "reportId": "anon-1793052665017",
+  "createdAt": "2026-10-26T22:11:05.017Z",
+  "verdict": {
+    "healthStatus": "INCONCLUSIVE",
+    "confidence": 0.2440944881889764,
+    "healthyProbability": 0.20866141732283464
+  },
+  "prediction": {
+    "classKey": "Tomato___Septoria_leaf_spot",
+    "cropKey": "Tomato",
+    "conditionKey": "Septoria_leaf_spot",
+    "cropName": "Tomate",
+    "conditionName": "Mancha foliar por Septoria"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Tomato___Septoria_leaf_spot",
+      "probability": 0.2440944881889764
+    },
+    {
+      "classKey": "Apple___Cedar_apple_rust",
+      "probability": 0.03937007874015748
+    },
+    {
+      "classKey": "Strawberry___Leaf_scorch",
+      "probability": 0.03937007874015748
+    }
+  ],
+  "warnings": [
+    "LOW_CONFIDENCE"
+  ],
+  "message": "No pudimos identificar la hoja con seguridad. Toma otra foto con luz natural, fondo neutro y la hoja centrada.",
+  "recommendation": null,
+  "model": {
+    "name": "ResNet50_Transfer_Mock",
+    "version": "1.0.0",
+    "provider": "mock"
+  },
+  "ensembleBreakdown": null,
+  "processingTimeMs": 26,
+  "imageMetadata": {
+    "width": 500,
+    "height": 500,
+    "sizeBytes": 1804,
+    "mimeType": "image/jpeg",
+    "sha256": "3c2b65c6284e25c8283098af46e8ed0543218388f6f7c53bc6539937036e7383"
+  },
+  "context": {}
+}

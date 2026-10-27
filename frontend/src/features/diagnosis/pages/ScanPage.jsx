@@ -263,11 +263,70 @@ export function ScanPage() {
           </Alert>
         )}
 
-        {apiError && (
+        {apiError && apiError.code === 'IMAGE_REJECTED' && (
+          <Alert type="error" title="Imagen rechazada por el filtro visual (CLIP)">
+            <div className="space-y-3">
+              <p>{apiError.detail}</p>
+              {apiError.clipTopLabels && apiError.clipTopLabels.length > 0 && (
+                <div className="p-3 bg-granate/5 rounded-lg border border-granate/20 text-xs font-mono space-y-1">
+                  <span className="font-semibold text-granate block">Detecciones principales del filtro:</span>
+                  {apiError.clipTopLabels.map((lbl, idx) => (
+                    <div key={idx} className="flex justify-between text-text-muted">
+                      <span>• {lbl.label}</span>
+                      <span className="font-semibold">{(lbl.score * 100).toFixed(1)}%</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className="pt-1">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleRemovePhoto}
+                >
+                  Seleccionar otra imagen
+                </Button>
+              </div>
+            </div>
+          </Alert>
+        )}
+
+        {apiError && apiError.code === 'IMAGE_REVIEW_REQUIRED' && (
+          <Alert type="warning" title="Validación foliar ambigua (CLIP)">
+            <div className="space-y-3">
+              <p>{apiError.detail}</p>
+              {apiError.clipTopLabels && apiError.clipTopLabels.length > 0 && (
+                <div className="p-3 bg-amber/5 rounded-lg border border-amber/20 text-xs font-mono space-y-1">
+                  <span className="font-semibold text-amber-dark block">Detecciones principales del filtro:</span>
+                  {apiError.clipTopLabels.map((lbl, idx) => (
+                    <div key={idx} className="flex justify-between text-text-muted">
+                      <span>• {lbl.label}</span>
+                      <span className="font-semibold">{(lbl.score * 100).toFixed(1)}%</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className="pt-1">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleRemovePhoto}
+                >
+                  Reintentar con una foto más nítida
+                </Button>
+              </div>
+            </div>
+          </Alert>
+        )}
+
+        {apiError && apiError.code !== 'IMAGE_REJECTED' && apiError.code !== 'IMAGE_REVIEW_REQUIRED' && (
           <Alert type="error" title="Error en el análisis">
             {apiError.detail || COPY.errors.generic}
           </Alert>
         )}
+
 
         {/* Sección Colapsable: Datos Opcionales de Campo */}
         <Card className="space-y-4">

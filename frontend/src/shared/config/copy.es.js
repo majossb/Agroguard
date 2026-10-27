@@ -33,6 +33,8 @@ export const COPY = Object.freeze({
     unauthorized: 'Debes iniciar sesión para realizar esta acción.',
     notFound: 'La información solicitada no existe o fue eliminada.',
     conflict: 'Ya existe un registro con esta información.',
+    imageRejected: 'La fotografía no parece ser una hoja de planta. Asegúrate de que la imagen muestre claramente una hoja o tejido vegetal.',
+    imageReviewRequired: 'No pudimos determinar con certeza si la imagen es una hoja de planta. Intenta con una foto más nítida, con la hoja centrada y sobre un fondo neutro.',
   },
   warnings: {
     LOW_CONFIDENCE: 'El sistema tiene dudas sobre este resultado. Te sugerimos tomar otra foto más nítida.',

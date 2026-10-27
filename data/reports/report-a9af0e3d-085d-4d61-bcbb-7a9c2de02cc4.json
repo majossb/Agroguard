@@ -1,0 +1,114 @@
+{
+  "reportId": "a9af0e3d-085d-4d61-bcbb-7a9c2de02cc4",
+  "createdAt": "2026-10-27T03:51:38.792Z",
+  "verdict": {
+    "healthStatus": "INCONCLUSIVE",
+    "confidence": 0.321732,
+    "healthyProbability": 0.0013989999999999996
+  },
+  "prediction": {
+    "classKey": "Peach___Bacterial_spot",
+    "cropKey": "Peach",
+    "conditionKey": "Bacterial_spot",
+    "cropName": "Melocotón / Durazno",
+    "conditionName": "Mancha bacteriana"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Peach___Bacterial_spot",
+      "probability": 0.321732
+    },
+    {
+      "classKey": "Tomato___Late_blight",
+      "probability": 0.289078
+    },
+    {
+      "classKey": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "probability": 0.139403
+    }
+  ],
+  "warnings": [
+    "LOW_CONFIDENCE",
+    "LOW_RESOLUTION"
+  ],
+  "message": "No pudimos identificar la hoja con seguridad. Toma otra foto con luz natural, fondo neutro y la hoja centrada.",
+  "recommendation": null,
+  "model": {
+    "name": "AgroGuard_Weighted_Voting_Ensemble_v1",
+    "version": "1.0.0",
+    "provider": "ensemble"
+  },
+  "ensembleBreakdown": {
+    "weights": {
+      "EfficientNetB0": 0.35,
+      "ResNet50": 0.3,
+      "MobileNetV2": 0.2,
+      "CNN_Base": 0.15
+    },
+    "models": [
+      {
+        "modelKey": "EfficientNetB0",
+        "displayName": "EfficientNet-B0 (Transfer)",
+        "weight": 0.35,
+        "topClassKey": "Peach___Bacterial_spot",
+        "topCropName": "Melocotón / Durazno",
+        "topConditionName": "Mancha bacteriana",
+        "individualConfidence": 0.9185,
+        "contribution": 0.3215,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "ResNet50",
+        "displayName": "ResNet-50 (Residual Deep)",
+        "weight": 0.3,
+        "topClassKey": "Tomato___Late_blight",
+        "topCropName": "Tomate",
+        "topConditionName": "Tizón tardío (Phytophthora)",
+        "individualConfidence": 0.9593,
+        "contribution": 0,
+        "agreesWithEnsemble": false
+      },
+      {
+        "modelKey": "MobileNetV2",
+        "displayName": "MobileNet-V2 (Edge Optimized)",
+        "weight": 0.2,
+        "topClassKey": "Apple___Apple_scab",
+        "topCropName": "Manzana",
+        "topConditionName": "Sarna del manzano (Venturia inaequalis)",
+        "individualConfidence": 0.512,
+        "contribution": 0.0002,
+        "agreesWithEnsemble": false
+      },
+      {
+        "modelKey": "CNN_Base",
+        "displayName": "CNN Base (Baseline ConvNet)",
+        "weight": 0.15,
+        "topClassKey": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+        "topCropName": "Maíz",
+        "topConditionName": "Mancha foliar por Cercospora / Mancha gris",
+        "individualConfidence": 0.9289,
+        "contribution": 0,
+        "agreesWithEnsemble": false
+      }
+    ],
+    "consensus": {
+      "agreeingCount": 1,
+      "totalCount": 4,
+      "ratio": 0.25,
+      "level": "DIVERGENT",
+      "label": "Discrepancia entre arquitecturas (1/4 modelos)"
+    },
+    "latencyMs": 690.26,
+    "winningClassKey": "Peach___Bacterial_spot",
+    "globalConfidence": 0.3217
+  },
+  "processingTimeMs": 695,
+  "imageMetadata": {
+    "width": 475,
+    "height": 350,
+    "sizeBytes": 38161,
+    "mimeType": "image/jpeg",
+    "sha256": "2989f19fcdfb8adf802a0e9c990fe9305ada78264409e5f40b886a61dec4d7c9"
+  },
+  "context": {}
+}

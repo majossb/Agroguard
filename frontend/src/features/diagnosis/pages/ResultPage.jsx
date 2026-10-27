@@ -10,7 +10,6 @@ import {
   CheckCircle2,
   Download,
   FileText,
-  Layers,
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
@@ -52,6 +51,81 @@ export function ResultPage() {
             </Link>
           </div>
         </Card>
+      </div>
+    );
+  }
+
+  // Si la imagen requiere revisión (cultivo no soportado o resultado ambiguo)
+  // o si la respuesta no contiene una predicción real (p. ej. un 200 de revisión
+  // CLIP), se evita renderizar un diagnóstico vacío con 0.0 % de confianza.
+  const hasPrediction = Boolean(diagnosis.prediction?.classKey);
+  if (diagnosis.validationState === 'REVISAR' || !hasPrediction) {
+    return (
+      <div className="max-w-3xl mx-auto space-y-8 py-4">
+        <div className="border-b border-border pb-4">
+          <MonoLabel>Módulo de Seguridad — Validación Visual Previa (CLIP)</MonoLabel>
+          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-forest mt-1">
+            Revisión Requerida
+          </h1>
+          <p className="text-xs text-text-muted mt-1 font-mono">
+            {formatDate(diagnosis.createdAt)} • Inferencia detenida por seguridad
+          </p>
+        </div>
+
+        <Alert type="warning" title="No se pudo certificar la imagen como cultivo soportado">
+          <div className="space-y-4">
+            <p className="text-sm leading-relaxed">
+              {diagnosis.validationReason || diagnosis.message || 'La imagen no superó el umbral de certeza para determinar si pertenece a los 38 cultivos monitoreados por el sistema.'}
+            </p>
+
+            {diagnosis.clipTopLabels && diagnosis.clipTopLabels.length > 0 && (
+              <div className="p-4 bg-amber-light/40 rounded-xl border border-amber/30 space-y-2">
+                <span className="text-xs font-mono font-semibold text-amber-dark uppercase tracking-wider block">
+                  Detecciones del Filtro Visual (CLIP Zero-Shot):
+                </span>
+                <div className="space-y-1.5 font-mono text-xs">
+                  {diagnosis.clipTopLabels.map((lbl, idx) => (
+                    <div key={idx} className="flex justify-between items-center text-forest">
+                      <span>• {lbl.label}</span>
+                      <span className="font-bold">{(lbl.score * 100).toFixed(1)}%</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="p-3 bg-surface rounded-lg border border-border text-xs text-text-muted">
+              <strong>Nota agronómica:</strong> Para prevenir falsos positivos y diagnósticos erróneos, el ensamble de modelos Keras se bloquea automáticamente cuando una imagen es ambigua o corresponde a un cultivo no soportado.
+            </div>
+          </div>
+        </Alert>
+
+        {previewUrl && (
+          <Card className="p-4 text-center">
+            <img
+              src={previewUrl}
+              alt="Hoja enviada a revisión"
+              className="max-h-72 mx-auto rounded-lg object-contain border border-border"
+            />
+          </Card>
+        )}
+
+        <div className="flex flex-col sm:flex-row gap-4 pt-2">
+          <Link to={ROUTES.SCAN} className="flex-1">
+            <Button icon={Camera} className="w-full">
+              Tomar o subir otra fotografía
+            </Button>
+          </Link>
+          <Link to={ROUTES.HOME} className="flex-1">
+            <Button variant="outline" className="w-full">
+              Ir al inicio
+            </Button>
+          </Link>
+        </div>
+
+        <div className="text-center text-xs text-text-muted pt-4 border-t border-border">
+          {COPY.disclaimers.agronomicAdvice}
+        </div>
       </div>
     );
   }
@@ -546,6 +620,11 @@ export function ResultPage() {
           </div>
         )}
       </div>
+
+      <p className="text-center text-xs text-text-muted font-mono pt-4 border-t border-border">
+        {COPY.disclaimers.agronomicAdvice}
+      </p>
     </div>
   );
 }
+

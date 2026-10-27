@@ -11,3 +11,8 @@ yarn-debug.log*
 yarn-error.log*
 .DS_Store
 Thumbs.db
+venv
+cnn_base_best_model.keras
+agroguard_modelos_completos/efficientnetb0_phase2_best.keras
+mobilenetv2_best_model.keras
+resnet50_phase2_best.keras

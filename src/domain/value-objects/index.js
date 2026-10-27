@@ -3,3 +3,4 @@ export * from './Confidence.js';
 export * from './ClassKey.js';
 export * from './HealthStatus.js';
 export * from './ImageInfo.js';
+export * from './ValidationState.js';

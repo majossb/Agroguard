@@ -1,0 +1,113 @@
+{
+  "reportId": "19cd2fd7-4884-4f8f-9da5-a30f9a20c754",
+  "createdAt": "2026-10-27T03:56:50.846Z",
+  "verdict": {
+    "healthStatus": "INCONCLUSIVE",
+    "confidence": 0.559559,
+    "healthyProbability": 0.000009
+  },
+  "prediction": {
+    "classKey": "Tomato___Late_blight",
+    "cropKey": "Tomato",
+    "conditionKey": "Late_blight",
+    "cropName": "Tomate",
+    "conditionName": "Tizón tardío (Phytophthora)"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Tomato___Late_blight",
+      "probability": 0.559559
+    },
+    {
+      "classKey": "Strawberry___Leaf_scorch",
+      "probability": 0.253017
+    },
+    {
+      "classKey": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "probability": 0.106228
+    }
+  ],
+  "warnings": [
+    "LOW_CONFIDENCE"
+  ],
+  "message": "No pudimos identificar la hoja con seguridad. Toma otra foto con luz natural, fondo neutro y la hoja centrada.",
+  "recommendation": null,
+  "model": {
+    "name": "AgroGuard_Weighted_Voting_Ensemble_v1",
+    "version": "1.0.0",
+    "provider": "ensemble"
+  },
+  "ensembleBreakdown": {
+    "weights": {
+      "EfficientNetB0": 0.35,
+      "ResNet50": 0.3,
+      "MobileNetV2": 0.2,
+      "CNN_Base": 0.15
+    },
+    "models": [
+      {
+        "modelKey": "EfficientNetB0",
+        "displayName": "EfficientNet-B0 (Transfer)",
+        "weight": 0.35,
+        "topClassKey": "Tomato___Late_blight",
+        "topCropName": "Tomate",
+        "topConditionName": "Tizón tardío (Phytophthora)",
+        "individualConfidence": 0.9815,
+        "contribution": 0.3435,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "ResNet50",
+        "displayName": "ResNet-50 (Residual Deep)",
+        "weight": 0.3,
+        "topClassKey": "Strawberry___Leaf_scorch",
+        "topCropName": "Fresa / Frutilla",
+        "topConditionName": "Quemadura de la hoja",
+        "individualConfidence": 0.8431,
+        "contribution": 0.0058,
+        "agreesWithEnsemble": false
+      },
+      {
+        "modelKey": "MobileNetV2",
+        "displayName": "MobileNet-V2 (Edge Optimized)",
+        "weight": 0.2,
+        "topClassKey": "Tomato___Late_blight",
+        "topCropName": "Tomate",
+        "topConditionName": "Tizón tardío (Phytophthora)",
+        "individualConfidence": 0.9987,
+        "contribution": 0.1997,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "CNN_Base",
+        "displayName": "CNN Base (Baseline ConvNet)",
+        "weight": 0.15,
+        "topClassKey": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+        "topCropName": "Maíz",
+        "topConditionName": "Mancha foliar por Cercospora / Mancha gris",
+        "individualConfidence": 0.7082,
+        "contribution": 0.0104,
+        "agreesWithEnsemble": false
+      }
+    ],
+    "consensus": {
+      "agreeingCount": 2,
+      "totalCount": 4,
+      "ratio": 0.5,
+      "level": "MODERATE",
+      "label": "Consenso Parcial (2/4 modelos coinciden)"
+    },
+    "latencyMs": 665.02,
+    "winningClassKey": "Tomato___Late_blight",
+    "globalConfidence": 0.5596
+  },
+  "processingTimeMs": 683,
+  "imageMetadata": {
+    "width": 1024,
+    "height": 768,
+    "sizeBytes": 145293,
+    "mimeType": "image/jpeg",
+    "sha256": "1b6280c907b7187e12f170d92a4e147e996deeb8ee3f8223489d0cb88bc637cf"
+  },
+  "context": {}
+}

@@ -63,6 +63,36 @@ const envSchema = z
     MAX_UPLOAD_MB: z.coerce.number().positive().default(8),
     MAX_INPUT_PIXELS: z.coerce.number().int().positive().default(40000000),
     STORAGE_DIR: z.string().default('uploads/images'),
+
+    // ── Filtro CLIP (validación visual previa al ensemble) ──────────────
+    // Activo por defecto cuando INFERENCE_DRIVER=ensemble.
+    // En entornos de test se desactiva automáticamente.
+    CLIP_ENABLED: booleanStringSchema.default(
+      process.env.NODE_ENV === 'test' ? false : true
+    ),
+    CLIP_THRESHOLD_PLANT: z.coerce
+      .number()
+      .min(0)
+      .max(1)
+      .default(0.3)
+      .describe('Masa mínima del grupo "planta/hoja" para permitir la inferencia (CLIP).'),
+    CLIP_THRESHOLD_NO_PLANT: z.coerce
+      .number()
+      .min(0)
+      .max(1)
+      .default(0.7)
+      .describe('Masa mínima del grupo "no válido" para rechazar la imagen (CLIP).'),
+    CLIP_THRESHOLD_UNSUPPORTED_CROP: z.coerce
+      .number()
+      .min(0)
+      .max(1)
+      .default(0.6)
+      .describe('Masa mínima para marcar una hoja como cultivo no soportado (CLIP).'),
+
+    // ── URLs de microservicios FastAPI ──────────────────────────────────
+    CLIP_SERVICE_URL: z.string().url().default('http://localhost:8001'),
+    ENSEMBLE_SERVICE_URL: z.string().url().default('http://localhost:8002'),
+
   })
   .superRefine((data, ctx) => {
     if (

@@ -2,8 +2,9 @@ import fs from 'fs/promises';
 import path from 'path';
 import { Diagnosis } from '../../../domain/entities/Diagnosis.js';
 import { DiagnosisInterpreter } from '../../../domain/services/DiagnosisInterpreter.js';
-import { ValidationError } from '../../../domain/errors/DomainError.js';
+import { ValidationError, ImageRejectedError, ImageReviewRequiredError } from '../../../domain/errors/DomainError.js';
 import { REVIEW_STATUS } from '../../../domain/entities/Condition.js';
+import { ValidationState } from '../../../domain/value-objects/ValidationState.js';
 
 /**
  * Caso de uso para crear y ejecutar un diagnóstico fitopatológico.
@@ -13,6 +14,7 @@ export class CreateDiagnosis {
    * @param {object} dependencies
    * @param {import('../../ports/ImageProcessor.js').ImageProcessor} dependencies.imageProcessor
    * @param {import('../../ports/InferenceEngine.js').InferenceEngine} dependencies.inferenceEngine
+   * @param {import('../../ports/ImageValidator.js').ImageValidator} [dependencies.imageValidator]
    * @param {import('../../ports/DiagnosisRepository.js').DiagnosisRepository} dependencies.diagnosisRepository
    * @param {import('../../ports/ConditionCatalogRepository.js').ConditionCatalogRepository} [dependencies.conditionCatalogRepository]
    * @param {import('../../ports/ImageStorage.js').ImageStorage} dependencies.imageStorage
@@ -24,6 +26,7 @@ export class CreateDiagnosis {
   constructor({
     imageProcessor,
     inferenceEngine,
+    imageValidator = null,
     diagnosisRepository,
     conditionCatalogRepository = null,
     imageStorage,
@@ -34,6 +37,7 @@ export class CreateDiagnosis {
   }) {
     this.imageProcessor = imageProcessor;
     this.inferenceEngine = inferenceEngine;
+    this.imageValidator = imageValidator;
     this.diagnosisRepository = diagnosisRepository;
     this.conditionCatalogRepository = conditionCatalogRepository;
     this.imageStorage = imageStorage;
@@ -42,6 +46,7 @@ export class CreateDiagnosis {
     this.validClassKeys = validClassKeys;
     this.minConfidence = minConfidence;
   }
+
 
   /**
    * Ejecuta el diagnóstico de la imagen
@@ -67,11 +72,53 @@ export class CreateDiagnosis {
     // 1. Normalización y saneamiento de la imagen
     const processedImage = await this.imageProcessor.normalize(imageBuffer);
 
-    // 2. Predicción con el motor de inferencia
+    // 2. Validación CLIP — ninguna inferencia del ensemble puede ejecutarse
+    //    sin que la imagen haya superado la validación CLIP.
+    let clipValidation = null;
+    if (this.imageValidator) {
+      clipValidation = await this.imageValidator.validate(processedImage.buffer);
+      const validationState = new ValidationState(clipValidation.state);
+
+      if (validationState.isRejected()) {
+        throw new ImageRejectedError(
+          clipValidation.reason || 'La imagen no parece corresponder a una hoja o planta.',
+          clipValidation.reason || '',
+          clipValidation.topLabels || []
+        );
+      }
+
+
+      if (validationState.isReview()) {
+        // REVISAR: HTTP 200, sin predicción, sin ensemble
+        const now = this.clock.now();
+        return {
+          id: null,
+          persisted: false,
+          createdAt: now.toISOString(),
+          validationState: ValidationState.REVISAR,
+          validationReason: clipValidation.reason,
+          clipTopLabels: clipValidation.topLabels || [],
+          verdict: null,
+          prediction: null,
+          topPredictions: null,
+          warnings: [clipValidation.reason],
+          message: clipValidation.reason,
+          recommendation: null,
+          model: null,
+          ensembleBreakdown: null,
+          report: null,
+          processingTimeMs: Date.now() - startTime,
+          image: null,
+        };
+      }
+    }
+
+    // 3. Predicción con el motor de inferencia (solo si CLIP aceptó o no hay validador)
     const inferenceResult = await this.inferenceEngine.predict({
       buffer: processedImage.buffer,
       mimeType: processedImage.mimeType,
     });
+
 
     // 3. Interpretación según reglas de negocio fitopatológicas
     const interpreted = DiagnosisInterpreter.interpret({
@@ -216,6 +263,16 @@ export class CreateDiagnosis {
       id: diagnosisId,
       persisted,
       createdAt: now.toISOString(),
+      validationState: clipValidation
+        ? ValidationState.ACEPTAR
+        : inferenceResult.validationState || null,
+      validationReason: clipValidation
+        ? clipValidation.reason
+        : inferenceResult.validationReason || null,
+      clipTopLabels: clipValidation
+        ? clipValidation.topLabels
+        : inferenceResult.clipTopLabels || null,
+
       verdict: {
         healthStatus: interpreted.verdict.healthStatus.value,
         confidence: interpreted.verdict.confidence,
@@ -242,5 +299,6 @@ export class CreateDiagnosis {
           }
         : null,
     };
+
   }
 }

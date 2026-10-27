@@ -22,7 +22,19 @@ export function mapDiagnosisResponse(raw) {
     id: typeof raw.id === 'string' ? raw.id : null,
     persisted: Boolean(raw.persisted),
     createdAt: typeof raw.createdAt === 'string' ? raw.createdAt : new Date().toISOString(),
+    validationState: typeof raw.validationState === 'string' ? raw.validationState : null,
+    validationReason: typeof raw.validationReason === 'string' ? raw.validationReason : null,
+    clipTopLabels: Array.isArray(raw.clipTopLabels)
+      ? raw.clipTopLabels
+          .filter((lbl) => lbl && typeof lbl.label === 'string')
+          .slice(0, 5)
+          .map((lbl) => ({
+            label: String(lbl.label),
+            score: typeof lbl.score === 'number' ? Math.max(0, Math.min(1, lbl.score)) : 0,
+          }))
+      : null,
     verdict: {
+
       healthStatus: ['HEALTHY', 'DISEASED', 'INCONCLUSIVE'].includes(verdict.healthStatus)
         ? verdict.healthStatus
         : 'INCONCLUSIVE',
@@ -78,7 +90,7 @@ export function mapDiagnosisResponse(raw) {
       name: typeof model.name === 'string' ? model.name : 'AgroGuard Deep Ensemble',
       version: typeof model.version === 'string' ? model.version : '1.0',
       provider: typeof model.provider === 'string' ? model.provider : 'ensemble',
-      isMock: false,
+      isMock: model.provider === 'mock',
     },
     ensembleBreakdown: raw.ensembleBreakdown || null,
     report: raw.report || null,

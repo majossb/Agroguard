@@ -1,0 +1,118 @@
+{
+  "reportId": "fd98d365-4c17-41fb-ae41-2701aae7daaa",
+  "createdAt": "2026-10-27T03:49:57.483Z",
+  "verdict": {
+    "healthStatus": "DISEASED",
+    "confidence": 0.999997,
+    "healthyProbability": 0
+  },
+  "prediction": {
+    "classKey": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+    "cropKey": "Tomato",
+    "conditionKey": "Tomato_Yellow_Leaf_Curl_Virus",
+    "cropName": "Tomate",
+    "conditionName": "Virus del rizado amarillo del tomate (TYLCV)"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "probability": 0.999997
+    },
+    {
+      "classKey": "Orange___Haunglongbing_(Citrus_greening)",
+      "probability": 0.000003
+    },
+    {
+      "classKey": "Apple___Apple_scab",
+      "probability": 0
+    }
+  ],
+  "warnings": [
+    "LOW_RESOLUTION"
+  ],
+  "message": null,
+  "recommendation": {
+    "reviewStatus": "PENDING_REVIEW",
+    "summary": "Diagnóstico para Tomate: Virus del rizado amarillo del tomate (TYLCV).",
+    "generalAdvice": "Consulta a un ingeniero agrónomo antes de aplicar cualquier tratamiento.",
+    "actions": []
+  },
+  "model": {
+    "name": "AgroGuard_Weighted_Voting_Ensemble_v1",
+    "version": "1.0.0",
+    "provider": "ensemble"
+  },
+  "ensembleBreakdown": {
+    "weights": {
+      "EfficientNetB0": 0.35,
+      "ResNet50": 0.3,
+      "MobileNetV2": 0.2,
+      "CNN_Base": 0.15
+    },
+    "models": [
+      {
+        "modelKey": "EfficientNetB0",
+        "displayName": "EfficientNet-B0 (Transfer)",
+        "weight": 0.35,
+        "topClassKey": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+        "topCropName": "Tomate",
+        "topConditionName": "Virus del rizado amarillo del tomate (TYLCV)",
+        "individualConfidence": 1,
+        "contribution": 0.35,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "ResNet50",
+        "displayName": "ResNet-50 (Residual Deep)",
+        "weight": 0.3,
+        "topClassKey": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+        "topCropName": "Tomate",
+        "topConditionName": "Virus del rizado amarillo del tomate (TYLCV)",
+        "individualConfidence": 1,
+        "contribution": 0.3,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "MobileNetV2",
+        "displayName": "MobileNet-V2 (Edge Optimized)",
+        "weight": 0.2,
+        "topClassKey": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+        "topCropName": "Tomate",
+        "topConditionName": "Virus del rizado amarillo del tomate (TYLCV)",
+        "individualConfidence": 1,
+        "contribution": 0.2,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "CNN_Base",
+        "displayName": "CNN Base (Baseline ConvNet)",
+        "weight": 0.15,
+        "topClassKey": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+        "topCropName": "Tomate",
+        "topConditionName": "Virus del rizado amarillo del tomate (TYLCV)",
+        "individualConfidence": 1,
+        "contribution": 0.15,
+        "agreesWithEnsemble": true
+      }
+    ],
+    "consensus": {
+      "agreeingCount": 4,
+      "totalCount": 4,
+      "ratio": 1,
+      "level": "UNANIMOUS",
+      "label": "Consenso Unánime (4/4 modelos coinciden)"
+    },
+    "latencyMs": 939.87,
+    "winningClassKey": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+    "globalConfidence": 1
+  },
+  "processingTimeMs": 955,
+  "imageMetadata": {
+    "width": 256,
+    "height": 256,
+    "sizeBytes": 14500,
+    "mimeType": "image/jpeg",
+    "sha256": "171a6e18cfc6440f82e8f0e0a20d694dc136dfa43295251ea6736c145c713570"
+  },
+  "context": {}
+}

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import dns from 'node:dns';
 
 /**
  * Conecta a la base de datos MongoDB usando Mongoose.
@@ -6,6 +7,8 @@ import mongoose from 'mongoose';
  * @param {object} [logger]
  * @returns {Promise<typeof mongoose>}
  */
+
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 export async function connectMongo(mongoUri, logger = null) {
   if (mongoose.connection.readyState === 1) {
     return mongoose;

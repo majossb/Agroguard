@@ -1,0 +1,114 @@
+{
+  "reportId": "a0ec9634-01d8-4918-9a95-b0a9a2fecaf6",
+  "createdAt": "2026-10-27T03:51:16.953Z",
+  "verdict": {
+    "healthStatus": "INCONCLUSIVE",
+    "confidence": 0.349808,
+    "healthyProbability": 0.49844299999999997
+  },
+  "prediction": {
+    "classKey": "Strawberry___Leaf_scorch",
+    "cropKey": "Strawberry",
+    "conditionKey": "Leaf_scorch",
+    "cropName": "Fresa / Frutilla",
+    "conditionName": "Quemadura de la hoja"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Strawberry___Leaf_scorch",
+      "probability": 0.349808
+    },
+    {
+      "classKey": "Blueberry___healthy",
+      "probability": 0.264256
+    },
+    {
+      "classKey": "Pepper,_bell___healthy",
+      "probability": 0.229641
+    }
+  ],
+  "warnings": [
+    "LOW_CONFIDENCE",
+    "LOW_RESOLUTION"
+  ],
+  "message": "No pudimos identificar la hoja con seguridad. Toma otra foto con luz natural, fondo neutro y la hoja centrada.",
+  "recommendation": null,
+  "model": {
+    "name": "AgroGuard_Weighted_Voting_Ensemble_v1",
+    "version": "1.0.0",
+    "provider": "ensemble"
+  },
+  "ensembleBreakdown": {
+    "weights": {
+      "EfficientNetB0": 0.35,
+      "ResNet50": 0.3,
+      "MobileNetV2": 0.2,
+      "CNN_Base": 0.15
+    },
+    "models": [
+      {
+        "modelKey": "EfficientNetB0",
+        "displayName": "EfficientNet-B0 (Transfer)",
+        "weight": 0.35,
+        "topClassKey": "Strawberry___Leaf_scorch",
+        "topCropName": "Fresa / Frutilla",
+        "topConditionName": "Quemadura de la hoja",
+        "individualConfidence": 0.9994,
+        "contribution": 0.3498,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "ResNet50",
+        "displayName": "ResNet-50 (Residual Deep)",
+        "weight": 0.3,
+        "topClassKey": "Blueberry___healthy",
+        "topCropName": "Arándano",
+        "topConditionName": "Hoja sana",
+        "individualConfidence": 0.8764,
+        "contribution": 0,
+        "agreesWithEnsemble": false
+      },
+      {
+        "modelKey": "MobileNetV2",
+        "displayName": "MobileNet-V2 (Edge Optimized)",
+        "weight": 0.2,
+        "topClassKey": "Pepper,_bell___healthy",
+        "topCropName": "Pimiento / Pimentón",
+        "topConditionName": "Hoja sana",
+        "individualConfidence": 0.99,
+        "contribution": 0,
+        "agreesWithEnsemble": false
+      },
+      {
+        "modelKey": "CNN_Base",
+        "displayName": "CNN Base (Baseline ConvNet)",
+        "weight": 0.15,
+        "topClassKey": "Grape___Esca_(Black_Measles)",
+        "topCropName": "Vid / Uva",
+        "topConditionName": "Esca / Sarampión negro",
+        "individualConfidence": 0.9999,
+        "contribution": 0,
+        "agreesWithEnsemble": false
+      }
+    ],
+    "consensus": {
+      "agreeingCount": 1,
+      "totalCount": 4,
+      "ratio": 0.25,
+      "level": "DIVERGENT",
+      "label": "Discrepancia entre arquitecturas (1/4 modelos)"
+    },
+    "latencyMs": 698.58,
+    "winningClassKey": "Strawberry___Leaf_scorch",
+    "globalConfidence": 0.3498
+  },
+  "processingTimeMs": 711,
+  "imageMetadata": {
+    "width": 1600,
+    "height": 449,
+    "sizeBytes": 155369,
+    "mimeType": "image/jpeg",
+    "sha256": "b1524daa0157c536ec65a357e16e05370d12949280158ca6b160e711c57b4cba"
+  },
+  "context": {}
+}

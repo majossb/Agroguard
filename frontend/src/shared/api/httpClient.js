@@ -14,7 +14,16 @@ export class ApiError extends Error {
    * @param {string} [params.traceId] - Identificador de rastreo único
    * @param {Array<{field?: string, message: string}>} [params.errors] - Lista de errores de validación
    */
-  constructor({ status, code = 'UNKNOWN_ERROR', detail, traceId, errors = [] }) {
+  constructor({
+    status,
+    code = 'UNKNOWN_ERROR',
+    detail,
+    traceId,
+    errors = [],
+    clipTopLabels = [],
+    validationState = null,
+    validationReason = null,
+  }) {
     super(detail || COPY.errors.generic);
     this.name = 'ApiError';
     this.status = status;
@@ -22,6 +31,9 @@ export class ApiError extends Error {
     this.detail = detail || COPY.errors.generic;
     this.traceId = traceId || null;
     this.errors = Array.isArray(errors) ? errors : [];
+    this.clipTopLabels = clipTopLabels;
+    this.validationState = validationState;
+    this.validationReason = validationReason;
   }
 }
 
@@ -156,13 +168,24 @@ export async function httpClient(endpoint, options = {}) {
       }
     }
 
+    // Sobrescribir con mensajes amigables para errores de validación CLIP
+    if (data?.code === 'IMAGE_REJECTED') {
+      friendlyDetail = COPY.errors.imageRejected;
+    } else if (data?.code === 'IMAGE_REVIEW_REQUIRED') {
+      friendlyDetail = COPY.errors.imageReviewRequired;
+    }
+
     throw new ApiError({
       status: response.status,
       code: data?.code || (response.status === 503 ? 'INFERENCE_UNAVAILABLE' : 'HTTP_ERROR'),
       detail: friendlyDetail,
       traceId: data?.traceId,
       errors: data?.errors || [],
+      clipTopLabels: data?.clipTopLabels || [],
+      validationState: data?.validationState || null,
+      validationReason: data?.validationReason || null,
     });
+
   }
 
   return data;

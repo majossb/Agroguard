@@ -18,5 +18,11 @@ describe('E2E — Model API', () => {
     expect(response.body.evaluationNote).toBe(
       'Métricas pendientes de verificación con una evaluación reproducible'
     );
+    expect(response.body.clip).toBeDefined();
+    expect(response.body.clip.model).toBe('openai/clip-vit-base-patch32');
+    expect(response.body.clip.thresholds.plant).toBeDefined();
+    expect(response.body.classDictionarySha256).toBeDefined();
+    expect(typeof response.body.classDictionarySha256).toBe('string');
   });
+
 });

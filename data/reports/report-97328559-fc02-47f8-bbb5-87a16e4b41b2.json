@@ -1,0 +1,53 @@
+{
+  "reportId": "97328559-fc02-47f8-bbb5-87a16e4b41b2",
+  "createdAt": "2026-10-27T02:50:03.052Z",
+  "verdict": {
+    "healthStatus": "INCONCLUSIVE",
+    "confidence": 0.2530612244897959,
+    "healthyProbability": 0.27346938775510204
+  },
+  "prediction": {
+    "classKey": "Tomato___Late_blight",
+    "cropKey": "Tomato",
+    "conditionKey": "Late_blight",
+    "cropName": "Tomate",
+    "conditionName": "Tizón tardío (Phytophthora)"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Tomato___Late_blight",
+      "probability": 0.2530612244897959
+    },
+    {
+      "classKey": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "probability": 0.036734693877551024
+    },
+    {
+      "classKey": "Pepper,_bell___healthy",
+      "probability": 0.036734693877551024
+    }
+  ],
+  "warnings": [
+    "LOW_CONFIDENCE"
+  ],
+  "message": "No pudimos identificar la hoja con seguridad. Toma otra foto con luz natural, fondo neutro y la hoja centrada.",
+  "recommendation": null,
+  "model": {
+    "name": "ResNet50_Transfer_Mock",
+    "version": "1.0.0",
+    "provider": "mock"
+  },
+  "ensembleBreakdown": null,
+  "processingTimeMs": 18,
+  "imageMetadata": {
+    "width": 600,
+    "height": 600,
+    "sizeBytes": 2434,
+    "mimeType": "image/jpeg",
+    "sha256": "5e6185c623217df6b0c21fae335e4e81cb596ef5efad404bf7a51cfb02ca6568"
+  },
+  "context": {
+    "plotName": "Parcela 1",
+    "notes": "Primeras manchas"
+  }
+}

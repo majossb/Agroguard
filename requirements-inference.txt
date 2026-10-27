@@ -1,0 +1,15 @@
+# AgroGuard — Dependencias del daemon de inferencia Python
+# Instalar con:  pip install -r requirements-inference.txt
+
+# Deep Learning — clasificadores Keras
+tensorflow==2.16.1
+keras>=3.0.0
+
+# Preprocesamiento de imágenes
+Pillow>=10.4.0
+numpy>=1.26.0
+
+# Filtro CLIP zero-shot (Hugging Face Transformers + PyTorch CPU)
+# Desinstalar si se prefiere usar GPU: cambiar torch por torch --index-url https://download.pytorch.org/whl/cu121
+transformers>=4.40.0
+torch>=2.3.0

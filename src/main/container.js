@@ -7,8 +7,9 @@ import { UuidGenerator } from '../infrastructure/system/UuidGenerator.js';
 import path from 'path';
 import { SharpImageProcessor } from '../infrastructure/image/SharpImageProcessor.js';
 import { PythonEnsembleInferenceEngine } from '../infrastructure/inference/PythonEnsembleInferenceEngine.js';
+import { HttpEnsembleInferenceEngine } from '../infrastructure/inference/HttpEnsembleInferenceEngine.js';
 import { MockInferenceEngine } from '../infrastructure/inference/MockInferenceEngine.js';
-import { HttpInferenceEngine } from '../infrastructure/inference/HttpInferenceEngine.js';
+import { ClipImageValidatorAdapter } from '../infrastructure/inference/ClipImageValidatorAdapter.js';
 import { LocalDiskImageStorage } from '../infrastructure/storage/LocalDiskImageStorage.js';
 import { BcryptPasswordHasher } from '../infrastructure/security/BcryptPasswordHasher.js';
 import { JwtTokenService } from '../infrastructure/security/JwtTokenService.js';
@@ -83,8 +84,28 @@ export function createContainer(overrides = {}) {
     });
 
   let inferenceEngine = overrides.inferenceEngine;
+  let imageValidator = overrides.imageValidator || null;
+
   if (!inferenceEngine) {
-    if (config.INFERENCE_DRIVER === 'ensemble') {
+    if (config.INFERENCE_DRIVER === 'http') {
+      // Microservicios FastAPI desacoplados (Docker / Arquitectura distribuida)
+      inferenceEngine = new HttpEnsembleInferenceEngine({
+        serviceUrl: config.ENSEMBLE_SERVICE_URL,
+        classNames: validClassKeys,
+        timeoutMs: config.INFERENCE_TIMEOUT_MS,
+        logger,
+      });
+
+      if (config.CLIP_ENABLED && !imageValidator) {
+        imageValidator = new ClipImageValidatorAdapter({
+          serviceUrl: config.CLIP_SERVICE_URL,
+          timeoutMs: config.INFERENCE_TIMEOUT_MS,
+          logger,
+        });
+      }
+    } else if (config.INFERENCE_DRIVER === 'ensemble') {
+      // Proceso daemon persistente de Python (desarrollo local de alta velocidad)
+      // Carga en memoria los 4 modelos Keras y el filtro visual CLIP en un único proceso daemon
       inferenceEngine = new PythonEnsembleInferenceEngine({
         pythonBin: config.PYTHON_BIN,
         scriptPath: path.resolve('scripts/inference_ensemble.py'),
@@ -92,14 +113,10 @@ export function createContainer(overrides = {}) {
         classNames: validClassKeys,
         logger,
         timeoutMs: config.INFERENCE_TIMEOUT_MS,
-      });
-    } else if (config.INFERENCE_DRIVER === 'http') {
-      inferenceEngine = new HttpInferenceEngine({
-        url: config.INFERENCE_URL,
-        timeoutMs: config.INFERENCE_TIMEOUT_MS,
-        retries: config.INFERENCE_RETRIES,
-        apiKey: config.INFERENCE_API_KEY,
-        logger,
+        clipEnabled: config.CLIP_ENABLED,
+        clipThresholdPlant: config.CLIP_THRESHOLD_PLANT,
+        clipThresholdReject: config.CLIP_THRESHOLD_NO_PLANT,
+        clipThresholdUnsupportedCrop: config.CLIP_THRESHOLD_UNSUPPORTED_CROP,
       });
     } else {
       inferenceEngine = new MockInferenceEngine({
@@ -108,6 +125,7 @@ export function createContainer(overrides = {}) {
         forceClass: config.MOCK_FORCE_CLASS,
       });
     }
+
   }
 
   // Repositorios
@@ -171,6 +189,7 @@ export function createContainer(overrides = {}) {
   const createDiagnosis = new CreateDiagnosis({
     imageProcessor,
     inferenceEngine,
+    imageValidator,
     diagnosisRepository,
     conditionCatalogRepository,
     imageStorage,
@@ -226,7 +245,10 @@ export function createContainer(overrides = {}) {
 
   const getModelInfo = new GetModelInfo({
     inferenceEngine,
+    config,
+    dictionaryPath: path.resolve('agroguard_modelos_completos/class_dictionary.json'),
   });
+
 
   // Middlewares de autenticación
   const { authenticate, optionalAuthenticate } = createAuthMiddlewares({
@@ -240,14 +262,20 @@ export function createContainer(overrides = {}) {
       check: async () => {
         const isDbReady = mongoose.connection.readyState === 1;
         const isEngineReady = await inferenceEngine.isReady();
+        const isClipReady = imageValidator ? await imageValidator.isReady() : null;
 
-        const overallStatus = isDbReady && isEngineReady ? 'UP' : isDbReady ? 'DEGRADED' : 'DOWN';
+        const servicesUp = isDbReady && isEngineReady && (isClipReady !== false);
+        const overallStatus = servicesUp ? 'UP' : isDbReady ? 'DEGRADED' : 'DOWN';
 
         return {
           status: overallStatus,
           checks: {
             database: isDbReady ? 'connected' : 'disconnected',
             inferenceEngine: `${config.INFERENCE_DRIVER} (${isEngineReady ? 'ready' : 'down'})`,
+            clipValidator: isClipReady === null
+              ? (config.INFERENCE_DRIVER === 'ensemble' ? 'integrated (daemon)' : 'disabled')
+              : isClipReady ? 'ready' : 'down',
+
             storage: 'ready',
           },
         };
@@ -295,6 +323,7 @@ export function createContainer(overrides = {}) {
     tokenService,
     imageProcessor,
     inferenceEngine,
+    imageValidator,
     userRepository,
     refreshTokenRepository,
     diagnosisRepository,

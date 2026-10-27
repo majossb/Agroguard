@@ -12,8 +12,12 @@ services:
       NODE_ENV: development
       MONGO_URI: mongodb://mongo:27017/agroguard
       JWT_ACCESS_SECRET: dev_jwt_access_secret_key_for_local_testing_123456789
-      INFERENCE_DRIVER: mock
-      ALLOW_MOCK_IN_PRODUCTION: "false"
+      INFERENCE_DRIVER: http
+      CLIP_ENABLED: "true"
+
+      CLIP_SERVICE_URL: http://clip-validator:8001
+      ENSEMBLE_SERVICE_URL: http://ensemble-inference:8002
+      INFERENCE_TIMEOUT_MS: 15000
       STORAGE_DIR: uploads/images
       CORS_ORIGINS: http://localhost:5173,http://localhost:3000
     volumes:
@@ -21,6 +25,48 @@ services:
     depends_on:
       mongo:
         condition: service_healthy
+      clip-validator:
+        condition: service_healthy
+      ensemble-inference:
+        condition: service_healthy
+
+  clip-validator:
+    build:
+      context: ./services/clip-validator
+      dockerfile: Dockerfile
+    container_name: agroguard-clip-validator
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    environment:
+      CLIP_THRESHOLD_PLANT: "0.30"
+      CLIP_THRESHOLD_NO_PLANT: "0.70"
+      CLIP_THRESHOLD_UNSUPPORTED_CROP: "0.60"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  ensemble-inference:
+    build:
+      context: ./services/ensemble-inference
+      dockerfile: Dockerfile
+    container_name: agroguard-ensemble-inference
+    restart: unless-stopped
+    ports:
+      - "8002:8002"
+    environment:
+      MODEL_ROOT: /models
+    volumes:
+      - ./agroguard_modelos_completos:/models:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 120s
 
   mongo:
     image: mongo:7.0

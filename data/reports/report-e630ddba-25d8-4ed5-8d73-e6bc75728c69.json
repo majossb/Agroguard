@@ -1,0 +1,118 @@
+{
+  "reportId": "e630ddba-25d8-4ed5-8d73-e6bc75728c69",
+  "createdAt": "2026-10-27T03:54:24.232Z",
+  "verdict": {
+    "healthStatus": "DISEASED",
+    "confidence": 0.815517,
+    "healthyProbability": 0.0060940000000000005
+  },
+  "prediction": {
+    "classKey": "Corn_(maize)___Northern_Leaf_Blight",
+    "cropKey": "Corn_(maize)",
+    "conditionKey": "Northern_Leaf_Blight",
+    "cropName": "Maíz",
+    "conditionName": "Tizón foliar del norte"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Corn_(maize)___Northern_Leaf_Blight",
+      "probability": 0.815517
+    },
+    {
+      "classKey": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "probability": 0.168725
+    },
+    {
+      "classKey": "Corn_(maize)___Common_rust_",
+      "probability": 0.008953
+    }
+  ],
+  "warnings": [
+    "LOW_RESOLUTION"
+  ],
+  "message": null,
+  "recommendation": {
+    "reviewStatus": "PENDING_REVIEW",
+    "summary": "Diagnóstico para Maíz: Tizón foliar del norte.",
+    "generalAdvice": "Consulta a un ingeniero agrónomo antes de aplicar cualquier tratamiento.",
+    "actions": []
+  },
+  "model": {
+    "name": "AgroGuard_Weighted_Voting_Ensemble_v1",
+    "version": "1.0.0",
+    "provider": "ensemble"
+  },
+  "ensembleBreakdown": {
+    "weights": {
+      "EfficientNetB0": 0.35,
+      "ResNet50": 0.3,
+      "MobileNetV2": 0.2,
+      "CNN_Base": 0.15
+    },
+    "models": [
+      {
+        "modelKey": "EfficientNetB0",
+        "displayName": "EfficientNet-B0 (Transfer)",
+        "weight": 0.35,
+        "topClassKey": "Corn_(maize)___Northern_Leaf_Blight",
+        "topCropName": "Maíz",
+        "topConditionName": "Tizón foliar del norte",
+        "individualConfidence": 0.9313,
+        "contribution": 0.3259,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "ResNet50",
+        "displayName": "ResNet-50 (Residual Deep)",
+        "weight": 0.3,
+        "topClassKey": "Corn_(maize)___Northern_Leaf_Blight",
+        "topCropName": "Maíz",
+        "topConditionName": "Tizón foliar del norte",
+        "individualConfidence": 0.9989,
+        "contribution": 0.2997,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "MobileNetV2",
+        "displayName": "MobileNet-V2 (Edge Optimized)",
+        "weight": 0.2,
+        "topClassKey": "Corn_(maize)___Northern_Leaf_Blight",
+        "topCropName": "Maíz",
+        "topConditionName": "Tizón foliar del norte",
+        "individualConfidence": 0.9491,
+        "contribution": 0.1898,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "CNN_Base",
+        "displayName": "CNN Base (Baseline ConvNet)",
+        "weight": 0.15,
+        "topClassKey": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+        "topCropName": "Maíz",
+        "topConditionName": "Mancha foliar por Cercospora / Mancha gris",
+        "individualConfidence": 0.9995,
+        "contribution": 0.0001,
+        "agreesWithEnsemble": false
+      }
+    ],
+    "consensus": {
+      "agreeingCount": 3,
+      "totalCount": 4,
+      "ratio": 0.75,
+      "level": "STRONG",
+      "label": "Consenso Fuerte (3/4 modelos coinciden)"
+    },
+    "latencyMs": 633.5,
+    "winningClassKey": "Corn_(maize)___Northern_Leaf_Blight",
+    "globalConfidence": 0.8155
+  },
+  "processingTimeMs": 639,
+  "imageMetadata": {
+    "width": 590,
+    "height": 393,
+    "sizeBytes": 43372,
+    "mimeType": "image/jpeg",
+    "sha256": "2132eaa25cd8cc61b6e691aedfde3f1b8d19502118efcfc57b9f5ee837120c83"
+  },
+  "context": {}
+}

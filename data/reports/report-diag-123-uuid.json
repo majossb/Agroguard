@@ -46,7 +46,7 @@
     "provider": "mock"
   },
   "ensembleBreakdown": null,
-  "processingTimeMs": 11,
+  "processingTimeMs": 22,
   "imageMetadata": {
     "width": 800,
     "height": 600,

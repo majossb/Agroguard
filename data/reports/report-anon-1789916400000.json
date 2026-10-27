@@ -2,44 +2,36 @@
   "reportId": "anon-1789916400000",
   "createdAt": "2026-09-20T15:00:00.000Z",
   "verdict": {
-    "healthStatus": "DISEASED",
-    "confidence": 0.945,
-    "healthyProbability": 0.017837837837837857
+    "healthStatus": "INCONCLUSIVE",
+    "confidence": 0.1946564885496183,
+    "healthyProbability": 0.3778625954198474
   },
   "prediction": {
-    "classKey": "Tomato___Early_blight",
-    "cropKey": "Tomato",
-    "conditionKey": "Early_blight",
-    "cropName": "Tomate",
-    "conditionName": "Tizón temprano (Alternaria)"
+    "classKey": "Apple___healthy",
+    "cropKey": "Apple",
+    "conditionKey": "healthy",
+    "cropName": "Manzana",
+    "conditionName": "Hoja sana"
   },
   "topPredictions": [
     {
-      "classKey": "Tomato___Early_blight",
-      "probability": 0.945
+      "classKey": "Apple___healthy",
+      "probability": 0.1946564885496183
     },
     {
       "classKey": "Apple___Apple_scab",
-      "probability": 0.0014864864864864878
+      "probability": 0.03816793893129771
     },
     {
-      "classKey": "Apple___Black_rot",
-      "probability": 0.0014864864864864878
+      "classKey": "Cherry___healthy",
+      "probability": 0.03816793893129771
     }
   ],
-  "warnings": [],
-  "message": null,
-  "recommendation": {
-    "reviewStatus": "REVIEWED",
-    "summary": "Enfermedad fungosa común en tomate.",
-    "generalAdvice": "Aplica las siguientes medidas integradas de manejo.",
-    "actions": [
-      {
-        "type": "cultural",
-        "description": "Rotación de cultivos"
-      }
-    ]
-  },
+  "warnings": [
+    "LOW_CONFIDENCE"
+  ],
+  "message": "No pudimos identificar la hoja con seguridad. Toma otra foto con luz natural, fondo neutro y la hoja centrada.",
+  "recommendation": null,
   "model": {
     "name": "FakeModel",
     "version": "1.0.0",
@@ -50,11 +42,9 @@
   "imageMetadata": {
     "width": 800,
     "height": 600,
-    "sizeBytes": 28,
+    "sizeBytes": 24,
     "mimeType": "image/jpeg",
-    "sha256": "bebe1a5f5c2af5a8fdd4bc330674a1217b27df9495529a3d02a6dd0fdc30381c"
+    "sha256": "9be5317b5ece984db2c8fbfcc7370842f9df34901747315b044e947fe9823c54"
   },
-  "context": {
-    "cropHint": "tomato"
-  }
+  "context": {}
 }

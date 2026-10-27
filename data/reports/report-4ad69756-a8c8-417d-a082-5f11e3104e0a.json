@@ -1,0 +1,114 @@
+{
+  "reportId": "4ad69756-a8c8-417d-a082-5f11e3104e0a",
+  "createdAt": "2026-10-27T03:52:09.184Z",
+  "verdict": {
+    "healthStatus": "INCONCLUSIVE",
+    "confidence": 0.246359,
+    "healthyProbability": 0.07139000000000002
+  },
+  "prediction": {
+    "classKey": "Tomato___Late_blight",
+    "cropKey": "Tomato",
+    "conditionKey": "Late_blight",
+    "cropName": "Tomate",
+    "conditionName": "Tizón tardío (Phytophthora)"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Tomato___Late_blight",
+      "probability": 0.246359
+    },
+    {
+      "classKey": "Tomato___Septoria_leaf_spot",
+      "probability": 0.240872
+    },
+    {
+      "classKey": "Tomato___Leaf_Mold",
+      "probability": 0.119962
+    }
+  ],
+  "warnings": [
+    "LOW_CONFIDENCE",
+    "LOW_RESOLUTION"
+  ],
+  "message": "No pudimos identificar la hoja con seguridad. Toma otra foto con luz natural, fondo neutro y la hoja centrada.",
+  "recommendation": null,
+  "model": {
+    "name": "AgroGuard_Weighted_Voting_Ensemble_v1",
+    "version": "1.0.0",
+    "provider": "ensemble"
+  },
+  "ensembleBreakdown": {
+    "weights": {
+      "EfficientNetB0": 0.35,
+      "ResNet50": 0.3,
+      "MobileNetV2": 0.2,
+      "CNN_Base": 0.15
+    },
+    "models": [
+      {
+        "modelKey": "EfficientNetB0",
+        "displayName": "EfficientNet-B0 (Transfer)",
+        "weight": 0.35,
+        "topClassKey": "Tomato___Septoria_leaf_spot",
+        "topCropName": "Tomate",
+        "topConditionName": "Mancha foliar por Septoria",
+        "individualConfidence": 0.6774,
+        "contribution": 0.0017,
+        "agreesWithEnsemble": false
+      },
+      {
+        "modelKey": "ResNet50",
+        "displayName": "ResNet-50 (Residual Deep)",
+        "weight": 0.3,
+        "topClassKey": "Tomato___Late_blight",
+        "topCropName": "Tomate",
+        "topConditionName": "Tizón tardío (Phytophthora)",
+        "individualConfidence": 0.7793,
+        "contribution": 0.2338,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "MobileNetV2",
+        "displayName": "MobileNet-V2 (Edge Optimized)",
+        "weight": 0.2,
+        "topClassKey": "Pepper,_bell___healthy",
+        "topCropName": "Pimiento / Pimentón",
+        "topConditionName": "Hoja sana",
+        "individualConfidence": 0.3012,
+        "contribution": 0.0109,
+        "agreesWithEnsemble": false
+      },
+      {
+        "modelKey": "CNN_Base",
+        "displayName": "CNN Base (Baseline ConvNet)",
+        "weight": 0.15,
+        "topClassKey": "Tomato___Leaf_Mold",
+        "topCropName": "Tomate",
+        "topConditionName": "Moho de la hoja (Passalora fulva)",
+        "individualConfidence": 0.7983,
+        "contribution": 0,
+        "agreesWithEnsemble": false
+      }
+    ],
+    "consensus": {
+      "agreeingCount": 1,
+      "totalCount": 4,
+      "ratio": 0.25,
+      "level": "DIVERGENT",
+      "label": "Discrepancia entre arquitecturas (1/4 modelos)"
+    },
+    "latencyMs": 683.38,
+    "winningClassKey": "Tomato___Late_blight",
+    "globalConfidence": 0.2464
+  },
+  "processingTimeMs": 687,
+  "imageMetadata": {
+    "width": 322,
+    "height": 268,
+    "sizeBytes": 25992,
+    "mimeType": "image/jpeg",
+    "sha256": "40fdf03088d401826307be15c32b6b99a0a899f0748889d4317b91a8eeb0cb6a"
+  },
+  "context": {}
+}

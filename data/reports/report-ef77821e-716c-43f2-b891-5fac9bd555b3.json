@@ -1,0 +1,118 @@
+{
+  "reportId": "ef77821e-716c-43f2-b891-5fac9bd555b3",
+  "createdAt": "2026-10-27T03:57:35.684Z",
+  "verdict": {
+    "healthStatus": "DISEASED",
+    "confidence": 0.964875,
+    "healthyProbability": 0.000008
+  },
+  "prediction": {
+    "classKey": "Tomato___Leaf_Mold",
+    "cropKey": "Tomato",
+    "conditionKey": "Leaf_Mold",
+    "cropName": "Tomate",
+    "conditionName": "Moho de la hoja (Passalora fulva)"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Tomato___Leaf_Mold",
+      "probability": 0.964875
+    },
+    {
+      "classKey": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "probability": 0.027048
+    },
+    {
+      "classKey": "Tomato___Target_Spot",
+      "probability": 0.003665
+    }
+  ],
+  "warnings": [
+    "LOW_RESOLUTION"
+  ],
+  "message": null,
+  "recommendation": {
+    "reviewStatus": "PENDING_REVIEW",
+    "summary": "Diagnóstico para Tomate: Moho de la hoja (Passalora fulva).",
+    "generalAdvice": "Consulta a un ingeniero agrónomo antes de aplicar cualquier tratamiento.",
+    "actions": []
+  },
+  "model": {
+    "name": "AgroGuard_Weighted_Voting_Ensemble_v1",
+    "version": "1.0.0",
+    "provider": "ensemble"
+  },
+  "ensembleBreakdown": {
+    "weights": {
+      "EfficientNetB0": 0.35,
+      "ResNet50": 0.3,
+      "MobileNetV2": 0.2,
+      "CNN_Base": 0.15
+    },
+    "models": [
+      {
+        "modelKey": "EfficientNetB0",
+        "displayName": "EfficientNet-B0 (Transfer)",
+        "weight": 0.35,
+        "topClassKey": "Tomato___Leaf_Mold",
+        "topCropName": "Tomate",
+        "topConditionName": "Moho de la hoja (Passalora fulva)",
+        "individualConfidence": 1,
+        "contribution": 0.35,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "ResNet50",
+        "displayName": "ResNet-50 (Residual Deep)",
+        "weight": 0.3,
+        "topClassKey": "Tomato___Leaf_Mold",
+        "topCropName": "Tomate",
+        "topConditionName": "Moho de la hoja (Passalora fulva)",
+        "individualConfidence": 1,
+        "contribution": 0.3,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "MobileNetV2",
+        "displayName": "MobileNet-V2 (Edge Optimized)",
+        "weight": 0.2,
+        "topClassKey": "Tomato___Leaf_Mold",
+        "topCropName": "Tomate",
+        "topConditionName": "Moho de la hoja (Passalora fulva)",
+        "individualConfidence": 0.8244,
+        "contribution": 0.1649,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "CNN_Base",
+        "displayName": "CNN Base (Baseline ConvNet)",
+        "weight": 0.15,
+        "topClassKey": "Tomato___Leaf_Mold",
+        "topCropName": "Tomate",
+        "topConditionName": "Moho de la hoja (Passalora fulva)",
+        "individualConfidence": 1,
+        "contribution": 0.15,
+        "agreesWithEnsemble": true
+      }
+    ],
+    "consensus": {
+      "agreeingCount": 4,
+      "totalCount": 4,
+      "ratio": 1,
+      "level": "UNANIMOUS",
+      "label": "Consenso Unánime (4/4 modelos coinciden)"
+    },
+    "latencyMs": 698.96,
+    "winningClassKey": "Tomato___Leaf_Mold",
+    "globalConfidence": 0.9649
+  },
+  "processingTimeMs": 703,
+  "imageMetadata": {
+    "width": 256,
+    "height": 256,
+    "sizeBytes": 21285,
+    "mimeType": "image/jpeg",
+    "sha256": "1cb04bf610ee974e3ca38758af6416ce99f553b38f89fc51b055b78289c7713a"
+  },
+  "context": {}
+}

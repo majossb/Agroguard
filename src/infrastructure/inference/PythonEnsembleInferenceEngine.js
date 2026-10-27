@@ -8,6 +8,8 @@ import { InferenceEngine } from '../../application/ports/InferenceEngine.js';
 import {
   InferenceUnavailableError,
   InvalidInferenceResultError,
+  ImageRejectedError,
+  ImageReviewRequiredError,
 } from '../../domain/errors/DomainError.js';
 import {
   WeightedVotingEnsemble,
@@ -36,6 +38,10 @@ export class PythonEnsembleInferenceEngine extends InferenceEngine {
     classNames,
     logger = null,
     timeoutMs = 30000,
+    clipEnabled = true,
+    clipThresholdPlant = 0.3,
+    clipThresholdReject = 0.7,
+    clipThresholdUnsupportedCrop = 0.6,
   }) {
     super();
     if (!Array.isArray(classNames) || classNames.length === 0) {
@@ -48,6 +54,10 @@ export class PythonEnsembleInferenceEngine extends InferenceEngine {
     this.classNames = classNames;
     this.logger = logger;
     this.timeoutMs = timeoutMs;
+    this.clipEnabled = clipEnabled;
+    this.clipThresholdPlant = clipThresholdPlant;
+    this.clipThresholdReject = clipThresholdReject;
+    this.clipThresholdUnsupportedCrop = clipThresholdUnsupportedCrop;
 
     this.childProcess = null;
     this.readlineInterface = null;
@@ -78,6 +88,13 @@ export class PythonEnsembleInferenceEngine extends InferenceEngine {
           ...process.env,
           AGROGUARD_MODEL_ROOT: this.modelDir,
           PYTHONUNBUFFERED: '1',
+          // Filtro CLIP — se pueden sobreescribir con variables de entorno estándar
+          AGROGUARD_CLIP_ENABLED: String(this.clipEnabled),
+          AGROGUARD_CLIP_THRESHOLD_PLANT: String(this.clipThresholdPlant),
+          AGROGUARD_CLIP_THRESHOLD_REJECT: String(this.clipThresholdReject),
+          AGROGUARD_CLIP_THRESHOLD_UNSUPPORTED_CROP: String(
+            this.clipThresholdUnsupportedCrop
+          ),
         };
 
         this.childProcess = spawn(this.pythonBin, [this.scriptPath], {
@@ -174,7 +191,19 @@ export class PythonEnsembleInferenceEngine extends InferenceEngine {
       clearTimeout(timer);
       this.activeRequest = null;
 
-      if (payload.status === 'success') {
+      if (payload.status === 'rejected') {
+        reject(new ImageRejectedError(
+          payload.motivo || 'La imagen no parece corresponder a una hoja o planta.',
+          payload.motivo || '',
+          payload.clipTopLabels || []
+        ));
+      } else if (payload.status === 'review') {
+        reject(new ImageReviewRequiredError(
+          payload.motivo || 'Resultado ambiguo: no se pudo determinar si la imagen es una planta.',
+          payload.motivo || '',
+          payload.clipTopLabels || []
+        ));
+      } else if (payload.status === 'success') {
         resolve(payload);
       } else {
         reject(new InvalidInferenceResultError(payload.message || 'Error en inferencia de Python'));
@@ -284,6 +313,9 @@ export class PythonEnsembleInferenceEngine extends InferenceEngine {
       provider: 'ensemble',
       probabilities: ensembleResult.ensembleProbabilities,
       inferenceTimeMs: daemonResult.inferenceTimeMs || 0,
+      validationState: 'ACEPTAR',
+      validationReason: daemonResult.clipMotivo || 'Fotografía de planta soportada detectada.',
+      clipTopLabels: daemonResult.clipTopLabels || [],
       ensembleBreakdown: {
         weights: ENSEMBLE_WEIGHTS,
         models: ensembleResult.modelsBreakdown,
@@ -294,6 +326,7 @@ export class PythonEnsembleInferenceEngine extends InferenceEngine {
       },
       explanation: null,
     };
+
   }
 
   /**

@@ -72,3 +72,42 @@ export class InvalidInferenceResultError extends DomainError {
     super(message, code);
   }
 }
+
+export class ImageRejectedError extends DomainError {
+  /**
+   * Lanzado cuando el filtro CLIP determina con alta confianza que la imagen
+   * NO corresponde a una hoja o planta.
+   * @param {string} [message]
+   * @param {string} [reason] - Motivo detallado devuelto por CLIP
+   * @param {Array<{label: string, score: number}>} [topLabels=[]]
+   */
+  constructor(
+    message = 'La imagen no parece corresponder a una hoja o planta.',
+    reason = '',
+    topLabels = []
+  ) {
+    super(message, 'IMAGE_REJECTED');
+    this.reason = reason;
+    this.topLabels = topLabels;
+  }
+}
+
+export class ImageReviewRequiredError extends DomainError {
+  /**
+   * Lanzado cuando el filtro CLIP produce un resultado ambiguo
+   * (ni suficiente confianza de planta ni de rechazo).
+   * @param {string} [message]
+   * @param {string} [reason] - Motivo detallado devuelto por CLIP
+   * @param {Array<{label: string, score: number}>} [topLabels=[]]
+   */
+  constructor(
+    message = 'No pudimos determinar con certeza si la imagen es una hoja de planta. Intenta con una foto más clara.',
+    reason = '',
+    topLabels = []
+  ) {
+    super(message, 'IMAGE_REVIEW_REQUIRED');
+    this.reason = reason;
+    this.topLabels = topLabels;
+  }
+}
+

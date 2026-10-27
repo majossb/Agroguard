@@ -1,0 +1,114 @@
+{
+  "reportId": "ecab6b6c-c434-4333-a58d-4c9d659ee316",
+  "createdAt": "2026-10-27T03:53:56.000Z",
+  "verdict": {
+    "healthStatus": "INCONCLUSIVE",
+    "confidence": 0.565231,
+    "healthyProbability": 0.000026
+  },
+  "prediction": {
+    "classKey": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+    "cropKey": "Corn_(maize)",
+    "conditionKey": "Cercospora_leaf_spot Gray_leaf_spot",
+    "cropName": "Maíz",
+    "conditionName": "Mancha foliar por Cercospora / Mancha gris"
+  },
+  "topPredictions": [
+    {
+      "classKey": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "probability": 0.565231
+    },
+    {
+      "classKey": "Corn_(maize)___Common_rust_",
+      "probability": 0.419543
+    },
+    {
+      "classKey": "Corn_(maize)___Northern_Leaf_Blight",
+      "probability": 0.015186
+    }
+  ],
+  "warnings": [
+    "LOW_CONFIDENCE",
+    "LOW_RESOLUTION"
+  ],
+  "message": "No pudimos identificar la hoja con seguridad. Toma otra foto con luz natural, fondo neutro y la hoja centrada.",
+  "recommendation": null,
+  "model": {
+    "name": "AgroGuard_Weighted_Voting_Ensemble_v1",
+    "version": "1.0.0",
+    "provider": "ensemble"
+  },
+  "ensembleBreakdown": {
+    "weights": {
+      "EfficientNetB0": 0.35,
+      "ResNet50": 0.3,
+      "MobileNetV2": 0.2,
+      "CNN_Base": 0.15
+    },
+    "models": [
+      {
+        "modelKey": "EfficientNetB0",
+        "displayName": "EfficientNet-B0 (Transfer)",
+        "weight": 0.35,
+        "topClassKey": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+        "topCropName": "Maíz",
+        "topConditionName": "Mancha foliar por Cercospora / Mancha gris",
+        "individualConfidence": 0.9679,
+        "contribution": 0.3388,
+        "agreesWithEnsemble": true
+      },
+      {
+        "modelKey": "ResNet50",
+        "displayName": "ResNet-50 (Residual Deep)",
+        "weight": 0.3,
+        "topClassKey": "Corn_(maize)___Common_rust_",
+        "topCropName": "Maíz",
+        "topConditionName": "Roya común",
+        "individualConfidence": 0.9883,
+        "contribution": 0.0002,
+        "agreesWithEnsemble": false
+      },
+      {
+        "modelKey": "MobileNetV2",
+        "displayName": "MobileNet-V2 (Edge Optimized)",
+        "weight": 0.2,
+        "topClassKey": "Corn_(maize)___Common_rust_",
+        "topCropName": "Maíz",
+        "topConditionName": "Roya común",
+        "individualConfidence": 0.5983,
+        "contribution": 0.0764,
+        "agreesWithEnsemble": false
+      },
+      {
+        "modelKey": "CNN_Base",
+        "displayName": "CNN Base (Baseline ConvNet)",
+        "weight": 0.15,
+        "topClassKey": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+        "topCropName": "Maíz",
+        "topConditionName": "Mancha foliar por Cercospora / Mancha gris",
+        "individualConfidence": 0.9992,
+        "contribution": 0.1499,
+        "agreesWithEnsemble": true
+      }
+    ],
+    "consensus": {
+      "agreeingCount": 2,
+      "totalCount": 4,
+      "ratio": 0.5,
+      "level": "MODERATE",
+      "label": "Consenso Parcial (2/4 modelos coinciden)"
+    },
+    "latencyMs": 675.09,
+    "winningClassKey": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+    "globalConfidence": 0.5652
+  },
+  "processingTimeMs": 684,
+  "imageMetadata": {
+    "width": 640,
+    "height": 480,
+    "sizeBytes": 121609,
+    "mimeType": "image/jpeg",
+    "sha256": "3eafa3a65f5b60cfd3c0329555bb89510c8e934a9784a1da34efa9e506db765c"
+  },
+  "context": {}
+}
